@@ -1,5 +1,8 @@
 import { push } from 'react-router-redux';
 import { authService } from '../services';
+import { SubmissionError } from 'redux-form';
+import { browserHistory } from 'react-router';
+// import api from '../../services/api';
 
 import * as types from '../types';
 
@@ -84,6 +87,24 @@ export function signUp(data) {
       });
   };
 }
+
+export const submitSignUp = ({ email, password, password_confirmation }) => {
+  return api()
+    .post('/auth', {
+      email,
+      password,
+      password_confirmation,
+      confirm_success_url: `${window.location.origin}/login`
+    })
+    .then(() => {
+      browserHistory.push('/about');
+    })
+    .catch((error) => {
+      if (error.data) {
+        throw new SubmissionError(error.data.errorMessages);
+      }
+    });
+};
 
 export function logOut() {
   return (dispatch) => {
