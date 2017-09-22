@@ -5950,6 +5950,10 @@ redux-form@^7.0.4:
     lodash-es "^4.17.3"
     prop-types "^15.5.9"
 
+redux-localstorage@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/redux-localstorage/-/redux-localstorage-0.4.1.tgz#faf6d719c581397294d811473ffcedee065c933c"
+
 redux-logger@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.1.tgz#ae8ae4c3c55ed3dd7aa31509f0856c5d3751057a"

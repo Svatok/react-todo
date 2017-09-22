@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import { isClient, isDebug } from '../../config/app';
+import persistState from 'redux-localstorage';
 
 /*
  * @param {Object} initial state to bootstrap our stores with for server-side rendering
@@ -20,10 +21,11 @@ export default function configureStore(initialState, history) {
     middleware.push(createLogger());
     store = createStore(rootReducer, initialState, compose(
       applyMiddleware(...middleware),
+      persistState(),
       typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
     ));
   } else {
-    store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleware), f => f));
+    store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleware), persistState(), f => f));
   }
 
   if (module.hot) {
