@@ -10,8 +10,8 @@ const initialState = {
 };
 
 
-export default function user(state = initialState, action) {
-  switch (action.type) {
+export default function user(state = initialState, {type, payload}) {
+  switch (type) {
     case types.START_LOGIN_USER:
       return {
         ...state,
@@ -22,7 +22,7 @@ export default function user(state = initialState, action) {
     case types.SUCCESS_LOGIN_USER:
       return {
         ...state,
-        ...action.payload,
+        ...payload,
         authenticated: true,
         fetched: true,
         fetching: false
@@ -44,7 +44,7 @@ export default function user(state = initialState, action) {
     case types.SUCCESS_SIGNUP_USER:
       return {
         ...state,
-        ...action.payload,
+        ...payload,
         authenticated: true,
         fetched: true,
         fetching: false

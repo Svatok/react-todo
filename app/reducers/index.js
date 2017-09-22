@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form';
+
 import user from '../reducers/user';
 import topic from '../reducers/topic';
 import message from '../reducers/message';
@@ -20,6 +22,7 @@ const isFetching = (state = false, action) => {
 // Combine reducers with routeReducer which keeps track of
 // router state
 const rootReducer = combineReducers({
+  form: formReducer,
   isFetching,
   topic,
   user,

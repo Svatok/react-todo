@@ -74,22 +74,24 @@ export function manualLogin(data) {
   };
 }
 
-export const submitSignUp = ({ email, password, password_confirmation }) => {
-  // dispatch(beginSignUp());
+export const submitSignUp = ({ email, password, password_confirmation }, dispatch) => {
+  dispatch({ type: types.START_SIGNUP_USER });
   return api()
     .post('/auth', {
       email,
       password,
       password_confirmation,
-      confirm_success_url: `${window.location.origin}/login`
     })
-    .then(() => {
-      dispatch(signUpSuccess('You have successfully registered an account!'));
+    .then((response) => {
+      dispatch({
+        type: types.SUCCESS_SIGNUP_USER,
+        payload: response.data.data
+      });
       browserHistory.push('/');
     })
     .catch((error) => {
-      // dispatch(signUpError('Oops! Something went wrong when signing up'));
-      showFormErrors(error.data.error, error.data.error_messages);
+      dispatch({ type: types.ERROR_SIGNUP_USER });
+      showFormErrors(error.data.errors);
     });
 };
 

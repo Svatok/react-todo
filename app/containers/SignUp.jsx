@@ -66,8 +66,7 @@ const SignUp = props => (
 );
 
 const mapStateToProps = state => ({
-  // formHasError: state.form.signUp && (state.form.signUp.syncErrors || state.form.signUp.submitErrors)
-  formHasError: false
+  formHasError: state.form.signUp && (state.form.signUp.syncErrors || state.form.signUp.submitErrors)
 });
 
 const mapDispatchToProps = {
