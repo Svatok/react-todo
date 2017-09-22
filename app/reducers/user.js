@@ -1,82 +1,80 @@
 import { combineReducers } from 'redux';
 import * as types from '../types';
 
-const isLogin = (
-  state = true,
-  action
-) => {
+const initialState = {
+  email: null,
+  authenticated: false,
+  fetched: false,
+  fetching: false,
+  id: null,
+};
+
+
+export default function user(state = initialState, action) {
   switch (action.type) {
-    case types.TOGGLE_LOGIN_MODE:
-      return !state;
+    case types.START_LOGIN_USER:
+      return {
+        ...state,
+        authenticated: false,
+        fetched: false,
+        fetching: true
+      };
+    case types.SUCCESS_LOGIN_USER:
+      return {
+        ...state,
+        ...action.payload,
+        authenticated: true,
+        fetched: true,
+        fetching: false
+      };
+    case types.ERROR_LOGIN_USER:
+      return {
+        ...state,
+        authenticated: false,
+        fetched: false,
+        fetching: false
+      };
+    case types.START_SIGNUP_USER:
+      return {
+        ...state,
+        authenticated: false,
+        fetched: false,
+        fetching: true
+      };
+    case types.SUCCESS_SIGNUP_USER:
+      return {
+        ...state,
+        ...action.payload,
+        authenticated: true,
+        fetched: true,
+        fetching: false
+      };
+    case types.ERROR_SIGNUP_USER:
+      return {
+        ...state,
+        authenticated: false,
+        fetched: false,
+        fetching: false
+      };
+    case types.START_LOGOUT_USER:
+      return {
+        ...state,
+        authenticated: true,
+        fetched: false,
+        fetching: true
+      };
+    case types.SUCCESS_LOGOUT_USER:
+      return {
+        ...initialState
+      };
+    case types.ERROR_LOGOUT_USER:
+      return {
+        ...state,
+        authenticated: true,
+        fetched: false,
+        fetching: false
+      };
     default:
       return state;
   }
-};
-
-const message = (
-  state = '',
-  action
-) => {
-  switch (action.type) {
-    case types.TOGGLE_LOGIN_MODE:
-    case types.MANUAL_LOGIN_USER:
-    case types.SIGNUP_USER:
-    case types.LOGOUT_USER:
-    case types.LOGIN_SUCCESS_USER:
-    case types.SIGNUP_SUCCESS_USER:
-      return '';
-    case types.LOGIN_ERROR_USER:
-    case types.SIGNUP_ERROR_USER:
-      return action.message;
-    default:
-      return state;
-  }
-};
-
-const isWaiting = (
-  state = false,
-  action
-) => {
-  switch (action.type) {
-    case types.MANUAL_LOGIN_USER:
-    case types.SIGNUP_USER:
-    case types.LOGOUT_USER:
-      return true;
-    case types.LOGIN_SUCCESS_USER:
-    case types.SIGNUP_SUCCESS_USER:
-    case types.LOGOUT_SUCCESS_USER:
-    case types.LOGIN_ERROR_USER:
-    case types.SIGNUP_ERROR_USER:
-    case types.LOGOUT_ERROR_USER:
-      return false;
-    default:
-      return state;
-  }
-};
-
-const authenticated = (
-  state = false,
-  action
-) => {
-  switch (action.type) {
-    case types.LOGIN_SUCCESS_USER:
-    case types.SIGNUP_SUCCESS_USER:
-    case types.LOGOUT_ERROR_USER:
-      return true;
-    case types.LOGIN_ERROR_USER:
-    case types.SIGNUP_ERROR_USER:
-    case types.LOGOUT_SUCCESS_USER:
-      return false;
-    default:
-      return state;
-  }
-};
-
-const userReducer = combineReducers({
-  isLogin,
-  isWaiting,
-  authenticated,
-  message
-});
-
-export default userReducer;
+}

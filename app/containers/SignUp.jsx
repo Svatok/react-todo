@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { Field, reduxForm } from 'redux-form';
 import { Button } from 'react-bootstrap';
-import { InputField, PasswordField } from '../components/common_components/fields';
+import { TextField, PasswordField } from '../components/common_components/fields';
 import { submitSignUp } from '../actions/users';
 import { required, email, minLength6 } from '../utils/validation';
 
@@ -18,14 +19,14 @@ const SignUp = props => (
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            { props.error && props.error.map(err =>
-              <div key={err.title} className="alert alert-danger mb-0" role="alert">
+            { props.error &&
+              <div className="alert alert-danger mb-0" role="alert">
                 <i className="icon icon-round-notice font-18 mr-15" />
-                {err.title}
+                {props.error}
               </div>
-            )}
+            }
             <form
-              className={classNames({'has-error': props.error})}
+              className={classNames({'has-error': props.formHasError})}
               noValidate
               onSubmit={props.handleSubmit(submitSignUp)}
             >
@@ -34,7 +35,7 @@ const SignUp = props => (
                   label="Email *"
                   name="email"
                   type="email"
-                  component={InputField}
+                  component={TextField}
                   validate={[required, email]}
                 />
                 <Field
@@ -51,13 +52,11 @@ const SignUp = props => (
                 />
               </div>
               <div className="mb-40">
-                <Button
-                  bsStyle="primary"
-                  className="mr-20"
-                >Back</Button>
                 <Button bsStyle="info" type="submit">Sign Up</Button>
               </div>
-              <p className="in-black">Already have an account? <a href="">Log in!</a></p>
+              <p className="in-black">
+                Already have an account? <Link to="/login">Log in!</Link>
+              </p>
             </form>
           </div>
         </div>
@@ -66,10 +65,15 @@ const SignUp = props => (
   </div>
 );
 
+const mapStateToProps = state => ({
+  // formHasError: state.form.signUp && (state.form.signUp.syncErrors || state.form.signUp.submitErrors)
+  formHasError: false
+});
+
 const mapDispatchToProps = {
-  // submitSignUpAsCandidate,
+  submitSignUp
 };
 
-export default connect(null, mapDispatchToProps)(reduxForm({
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: 'signUp'
 })(SignUp));

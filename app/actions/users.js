@@ -2,7 +2,8 @@ import { push } from 'react-router-redux';
 import { authService } from '../services';
 import { SubmissionError } from 'redux-form';
 import { browserHistory } from 'react-router';
-// import api from '../../services/api';
+import api from '../services/api';
+import showFormErrors from '../utils/showFormErrors';
 
 import * as types from '../types';
 
@@ -26,18 +27,18 @@ function loginError(message) {
 
 function signUpError(message) {
   return {
-    type: types.SIGNUP_ERROR_USER,
+    type: types.ERROR_SIGNUP_USER,
     message
   };
 }
 
 function beginSignUp() {
-  return { type: types.SIGNUP_USER };
+  return { type: types.START_SIGNUP_USER };
 }
 
 function signUpSuccess(message) {
   return {
-    type: types.SIGNUP_SUCCESS_USER,
+    type: types.SUCCESS_SIGNUP_USER,
     message
   };
 }
@@ -73,22 +74,8 @@ export function manualLogin(data) {
   };
 }
 
-export function signUp(data) {
-  return (dispatch) => {
-    dispatch(beginSignUp());
-
-    return authService().signUp(data)
-      .then((response) => {
-          dispatch(signUpSuccess('You have successfully registered an account!'));
-          dispatch(push('/'));
-      })
-      .catch((err) => {
-        dispatch(signUpError('Oops! Something went wrong when signing up'));
-      });
-  };
-}
-
 export const submitSignUp = ({ email, password, password_confirmation }) => {
+  // dispatch(beginSignUp());
   return api()
     .post('/auth', {
       email,
@@ -97,12 +84,12 @@ export const submitSignUp = ({ email, password, password_confirmation }) => {
       confirm_success_url: `${window.location.origin}/login`
     })
     .then(() => {
-      browserHistory.push('/about');
+      dispatch(signUpSuccess('You have successfully registered an account!'));
+      browserHistory.push('/');
     })
     .catch((error) => {
-      if (error.data) {
-        throw new SubmissionError(error.data.errorMessages);
-      }
+      // dispatch(signUpError('Oops! Something went wrong when signing up'));
+      showFormErrors(error.data.error, error.data.error_messages);
     });
 };
 
