@@ -8,11 +8,6 @@ const PasswordField = props => (
     type="password"
     {...props}
   >
-    <FormControl.Feedback>
-      <button type="button" className="input-icon-active">
-        <i className="icon icon-eye-cross font-18 in-grey-400" />
-      </button>
-    </FormControl.Feedback>
   </InputField>
 );
 

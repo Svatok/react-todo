@@ -51,13 +51,12 @@ const SignUp = props => (
                 />
               </div>
               <div className="mb-40">
-                <Button
-                  bsStyle="primary"
-                  className="mr-20"
-                >Back</Button>
                 <Button bsStyle="info" type="submit">Sign Up</Button>
               </div>
-              <p className="in-black">Already have an account? <a href="">Log in!</a></p>
+              <p className="in-black">
+                Already have an account?
+                <Link to="/login">Log in!</Link>
+              </p>
             </form>
           </div>
         </div>

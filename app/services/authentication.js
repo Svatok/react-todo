@@ -14,10 +14,12 @@ export default () => {
     }),
     signUp: ({ email, password }) => client.request({
       method: 'POST',
-      url: '/users',
+      url: '/api/auth',
       data: {
         email,
-        password
+        password,
+        password_confirmation: password,
+        confirm_success_url: `http://localhost:8000`
       }
     }),
     logOut: () => client.request({
@@ -26,4 +28,3 @@ export default () => {
     })
   };
 };
-
