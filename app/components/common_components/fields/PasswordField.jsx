@@ -1,14 +1,14 @@
 import React from 'react';
 import { FormControl } from 'react-bootstrap';
-import { InputField } from './';
+import { TextField } from './';
 
 const PasswordField = props => (
-  <InputField
-    className="mb-5"
+  <TextField
+    className={props.className}
     type="password"
     {...props}
   >
-  </InputField>
+  </TextField>
 );
 
 export default PasswordField;

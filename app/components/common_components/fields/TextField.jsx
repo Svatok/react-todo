@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { FormGroup, ControlLabel } from 'react-bootstrap';
 
-const InputField = ({
+const TextField = ({
   autoComplete,
   className,
   input,
@@ -14,11 +13,11 @@ const InputField = ({
   meta: { touched, error },
   children
 }) => (
-  <FormGroup>
-    <ControlLabel>{label}</ControlLabel>
+  <FormGroup className={className}>
+    { label && <ControlLabel>{label}</ControlLabel>}
     <input
       autoComplete={autoComplete}
-      className={classNames('form-control', className)}
+      className="form-control"
       name={name}
       placeholder={placeholder}
       type={type}
@@ -29,12 +28,12 @@ const InputField = ({
   </FormGroup>
 );
 
-InputField.defaultProps = {
+TextField.defaultProps = {
   type: 'text'
 };
 
-InputField.propTypes = {
+TextField.propTypes = {
   type: PropTypes.string
 };
 
-export default InputField;
+export default TextField;
