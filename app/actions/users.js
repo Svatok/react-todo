@@ -4,6 +4,7 @@ import { SubmissionError } from 'redux-form';
 import { browserHistory } from 'react-router';
 import api from '../services/api';
 import showFormErrors from '../utils/showFormErrors';
+import { deleteTokenFromCookies } from '../utils/tokens';
 
 import * as types from '../types';
 
@@ -95,16 +96,37 @@ export const submitSignUp = ({ email, password, password_confirmation }, dispatc
     });
 };
 
-export function logOut() {
-  return (dispatch) => {
-    dispatch(beginLogout());
 
-    return authService().logOut()
-      .then((response) => {
-          dispatch(logoutSuccess());
-      })
-      .catch((err) => {
-        dispatch(logoutError());
+export const logOut = () => (dispatch) => {
+  dispatch({ type: types.START_LOGOUT_USER });
+  return api()
+    .delete('/auth/sign_out')
+    .then((response) => {
+      deleteTokenFromCookies();
+      dispatch({
+        type: types.SUCCESS_LOGOUT_USER,
+        payload: response
       });
-  };
-}
+      browserHistory.push('/');
+    })
+    .catch((error) => {
+      dispatch({
+        type: types.ERROR_LOGOUT_USER,
+        payload: error
+      });
+    });
+};
+
+// export function logOut() {
+//   return (dispatch) => {
+//     dispatch(beginLogout());
+//
+//     return authService().logOut()
+//       .then((response) => {
+//           dispatch(logoutSuccess());
+//       })
+//       .catch((err) => {
+//         dispatch(logoutError());
+//       });
+//   };
+// }

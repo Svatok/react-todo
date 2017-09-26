@@ -2,30 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import classNames from 'classnames/bind';
 import { logOut } from '../actions/users';
-import styles from '../css/components/navigation';
 
-const cx = classNames.bind(styles);
-
-const Navigation = ({ user, logOut }) => {
+const Navigation = ({ user, logOutUser }) => {
     return (
-      <nav className={cx('navigation')} role="navigation">
-        <Link
-          to="/"
-          className={cx('item', 'logo')}
-          activeClassName={cx('active')}>Ninja Ocean</Link>
-          { user.authenticated ? (
+      <div className="col-xs-8 col-xs-offset-2 navigation">
+        { user.authenticated &&
+          <div className="user-control pull-right">
             <Link
-              onClick={logOut}
-              className={cx('item')} to="/">Logout</Link>
-          ) : (
-            <Link className={cx('item')} to="/login">Log in</Link>
-          )}
-        <Link className={cx('item')} to="/signup">Sign Up</Link>
-        <Link className={cx('item')} to="/dashboard">Dashboard</Link>
-        <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
-      </nav>
+              onClick={logOutUser}
+              className='btn btn-primary btn-xs logout'
+              to="/"
+            >
+              Sign out
+            </Link>
+          </div>
+        }
+      </div>
     );
 };
 
@@ -40,4 +33,22 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { logOut })(Navigation);
+const mapDispatchToProps = {
+  logOutUser: logOut
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+
+
+// <nav className='navigation' role="navigation">
+//     { user.authenticated ? (
+//       <Link
+//         onClick={logOut}
+//         className='item' to="/">Logout</Link>
+//     ) : (
+//       <Link className='item' to="/login">Log in</Link>
+//     )}
+//   <Link className='item' to="/signup">Sign Up</Link>
+//   <Link className='item' to="/dashboard">Dashboard</Link>
+//   <Link to="/about" className='item' activeClassName='active'>About</Link>
+// </nav>

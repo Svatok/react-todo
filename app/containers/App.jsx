@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
 import Navigation from '../containers/Navigation';
+import Logo from '../containers/Logo';
+import Footer from '../containers/Footer';
 import Message from '../containers/Message';
-import styles from '../css/main';
-
-const cx = classNames.bind(styles);
 
 
 /*
@@ -19,10 +17,14 @@ const cx = classNames.bind(styles);
  */
 const App = ({ children }) => {
   return (
-    <div className={cx('app')}>
+    <div className='app'>
       <Navigation />
+      <Logo />
       <Message />
-      {children}
+      <div className='container'>
+        {children}
+      </div>
+      <Footer />
     </div>
   );
 };

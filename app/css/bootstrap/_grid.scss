@@ -1,0 +1,137 @@
+// Add a custom "xl" breakpoint into Boostrap 3
+// Use the same apporoach to add any new breakpoint
+//
+// Instructions:
+// 1 - Copy Bootstrap's entrypoint "/assets/stylesheets/_bootstrap.scss" into your styles folder
+// 2 - Setup your SASS config to be able to resolve all Bootstrap's @import
+// 3 - Replace default @import "bootstrap/grid" with this file
+// 4 - Edit this file and setup new and default breakpoints (Bootstrap comes with xs, sm, md, lg breakpoints)
+// 5 - Recompile bootstrap!
+
+//
+// Grid system
+// --------------------------------------------------
+
+// Set custom "xl" breakpoint range
+$screen-xl:                  1200px;
+$screen-xl-min:              $screen-xl;
+
+//Set screen-lg-max
+$screen-lg-max:              ($screen-xl-min - 1);
+
+// Extra Large screen / wide desktop
+$container-xlarge-desktop:      (1170px + $grid-gutter-width);
+//** For `$screen-lg-min` and up.
+$container-xl:                 $container-xlarge-desktop;
+
+
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
+.container {
+  @include container-fixed;
+
+  @media (min-width: $screen-sm-min) {
+    width: $container-sm;
+  }
+  @media (min-width: $screen-md-min) {
+    width: $container-md;
+  }
+  @media (min-width: $screen-lg-min) {
+    width: $container-lg;
+  }
+  @media (min-width: $screen-xl-min) {
+    width: $container-xl;
+  }
+}
+
+
+// Fluid container
+//
+// Utilizes the mixin meant for fixed width containers, but without any defined
+// width for fluid, full width layouts.
+
+.container-fluid {
+  @include container-fixed;
+}
+
+
+// Row
+//
+// Rows contain and clear the floats of your columns.
+
+.row {
+  @include make-row;
+}
+
+
+// Columns
+//
+// Common styles for small and large grid columns
+
+$xl-list: "col-xl-1";
+
+@for $i from 2 through $grid-columns {
+    $xl-list: "#{$xl-list}, .col-xl-#{$i}";
+}
+@include make-grid-columns(1, "#{$xl-list}, .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1");
+
+
+
+// Extra small grid
+//
+// Columns, offsets, pushes, and pulls for extra small devices like
+// smartphones.
+@media (min-width: $screen-xs-min) {
+    @include make-grid(xs);
+}
+
+// Small grid
+//
+// Columns, offsets, pushes, and pulls for the small device range, from phones
+// to tablets.
+
+@media (min-width: $screen-sm-min) {
+  @include make-grid(sm);
+}
+
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+
+@media (min-width: $screen-md-min) {
+  @include make-grid(md);
+}
+
+
+// Large grid
+//
+// Columns, offsets, pushes, and pulls for the large desktop device range.
+
+@media (min-width: $screen-lg-min) {
+  @include make-grid(lg);
+}
+
+
+// Extra Large  grid
+//
+// Columns, offsets, pushes, and pulls for extra small devices like
+// smartphones.
+@media (min-width: $screen-xl-min) {
+  @include make-grid(xl);
+}
+
+
+// Define visibility/invisibility classes WITHIN custom breakpoint range
+@media (min-width: $screen-lg-min) and (max-width: $screen-lg-max) {
+  @include responsive-visibility('.visible-lg');
+  @include responsive-invisibility('.hidden-lg');
+}
+
+// Define visibility/invisibility classes WITHIN custom breakpoint range
+@media (min-width: $screen-xl-min) {
+  @include responsive-visibility('.visible-xl');
+  @include responsive-invisibility('.hidden-xl');
+}

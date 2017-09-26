@@ -1,8 +1,5 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const postcssImport = require('postcss-import');
-const postcssCssnext = require('postcss-cssnext');
-const postcssReporter = require('postcss-reporter');
 const PATHS = require('../paths');
 
 module.exports = ({ production = false, browser = false } = {}) => {
@@ -23,28 +20,21 @@ module.exports = ({ production = false, browser = false } = {}) => {
    * css-loader/locals instead of style-loader!css-loader in the prerendering bundle.
    * It doesn't embed CSS but only exports the identifier mappings.
    */
-  const localIdentName = 'localIdentName=[name]__[local]___[hash:base64:5]';
+  const localIdentName = '[name]__[local]___[hash:base64:5]';
 
   const createCssLoaders = embedCssInBundle => ([
+
     {
-      loader: embedCssInBundle ? 'css-loader' : 'css-loader/locals',
+      loader: 'css-loader',
       options: {
         localIdentName,
-        sourceMap: true,
-        modules: true,
+        sourceMap: !production,
+        minimize: true,
         importLoaders: 1
       }
     },
     {
-      loader: 'postcss-loader',
-      options: {
-        ident: 'postcss',
-        plugins: [
-          postcssImport({ path: path.resolve(PATHS.app, './css') }),
-          postcssCssnext({ browsers: ['> 1%', 'last 2 versions'] }),
-          postcssReporter({ clearMessages: true })
-        ]
-      }
+      loader: "sass-loader"
     }
   ]);
 
@@ -62,9 +52,8 @@ module.exports = ({ production = false, browser = false } = {}) => {
   const browserLoaders = createBrowserLoaders(production)(createCssLoaders(true));
 
   return {
-    test: /\.css$/,
+    test: /\.s?css$/,
     use: browser ? browserLoaders : serverLoaders,
     include: PATHS.app
-  };
+  }
 };
-
