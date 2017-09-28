@@ -24,7 +24,7 @@ const Navigation = ({ user, logOutUser }) => {
 
 Navigation.propTypes = {
   user: PropTypes.object,
-  logOut: PropTypes.func.isRequired
+  logOutUser: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
