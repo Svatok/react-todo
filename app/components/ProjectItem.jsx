@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel } from 'react-bootstrap';
-import { NewTaskForm } from './';
-import { TaskItem } from './';
+import NewTaskForm from './NewTaskForm';
+import TaskItem from './TaskItem';
 
 const ProjectItem = () => (
   <div className="project">

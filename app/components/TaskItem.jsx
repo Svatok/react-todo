@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel } from 'react-bootstrap';
 
 const TaskItem = () => (
-  <tr>
+  <tr className='task-item'>
     <td className="task-status">
       <input className="task-check" type="checkbox"/>
       <label></label>
