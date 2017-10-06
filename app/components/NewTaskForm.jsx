@@ -1,26 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, ControlLabel } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Field, reduxForm, reset } from 'redux-form';
+import { TextField } from '../components/common_components/fields';
+import { required } from '../utils/validation';
+import { addTask } from '../actions/tasks';
 
-const NewTaskForm = () => (
-  <div>
-    <form className="new_task">
-      <div className="create-task-header">
-        <div className="create-task-in input-group">
-          <input className="form-control" placeholder="Start typing here to create a task..." type="text"/>
-          <span className="input-group-btn add-task">
-            <button className="btn add-task" type="submit">Add Task</button>
-          </span>
+const clearForm = formName => (dispatch) => {
+  return dispatch(reset(formName));
+};
+
+const NewTaskForm = ({projectId, addTask, ...props, clearForm}) => {
+  const submitAddTask = (data) => {
+    addTask(data);
+    clearForm(props.form);
+  };
+
+  return (
+    <div>
+      <form
+        className="new_task"
+        noValidate
+        onSubmit={props.handleSubmit(submitAddTask)}
+      >
+        <div className="create-task-header">
+          <div className="create-task-in input-group">
+            <Field
+              name="name"
+              type="text"
+              placeholder="Start typing here to create a task..."
+              component={TextField}
+            />
+            <span className="input-group-btn add-task">
+              <button className="btn add-task" type="submit">Add Task</button>
+            </span>
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
-);
-
-NewTaskForm.defaultProps = {
+      </form>
+    </div>
+  );
 };
 
-NewTaskForm.propTypes = {
+function mapStateToProps(state, ownProps) {
+  return {
+    initialValues: {
+      projectId: ownProps.projectId
+    }
+  };
 };
 
-export default NewTaskForm;
+const mapDispatchToProps = {
+  addTask,
+  clearForm
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm()(NewTaskForm));

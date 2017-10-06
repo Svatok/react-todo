@@ -5,9 +5,11 @@ import * as types from '../types';
 const initialState = {
   fetched: false,
   fetching: false,
-  projects: [],
+  projects: {},
   project: null,
-  projectNew: false
+  projectNew: false,
+  editingProject: null,
+  editingTask: null
 };
 
 export default function projects(state = initialState, {type, payload}) {
@@ -23,7 +25,7 @@ export default function projects(state = initialState, {type, payload}) {
        ...state,
        fetched: true,
        fetching: false,
-       jobs: payload.projects
+       projects: payload
      };
    case types.FETCH_PROJECTS_ERROR:
     return {
@@ -39,7 +41,10 @@ export default function projects(state = initialState, {type, payload}) {
     case types.ADD_PROJECT_SUCCESS:
      return {
        ...state,
-       projects: projects.push(action.payload),
+       projects: {
+         ...state.projects,
+         [payload.id]: payload
+       },
        projectNew: false
      };
    case types.ADD_PROJECT_CANCEL:
@@ -62,6 +67,78 @@ export default function projects(state = initialState, {type, payload}) {
       ...state,
       job: null
     };
+    // case types.REMOVE_PROJECT_START:
+    //   return {
+    //     ...state,
+    //     job: null
+    //   };
+  case types.REMOVE_PROJECT_SUCCESS:
+    const removeProject = () => {
+      let newProjects = Object.assign({}, state.projects)
+      delete newProjects[payload]
+      return newProjects
+    }
+   return {
+     ...state,
+     projects: removeProject()
+   };
+//  case types.REMOVE_PROJECT_ERROR:
+//   return {
+//     ...state,
+//     job: null
+//   };
+
+    // case types.ADD_TASK_START:
+    //   return {
+    //     ...state,
+    //     projectNew: true
+    //   };
+    case types.ADD_TASK_SUCCESS:
+      const insertItem = () => {
+        let newTasks = state.projects[payload.todo_id].items.slice();
+        newTasks.splice(payload.position, 0, payload);
+        return newTasks;
+      }
+      return {
+       ...state,
+       projects: {
+         ...state.projects,
+         [payload.todo_id]: {
+           ...state.projects[payload.todo_id],
+           items: insertItem()
+         }
+       }
+     };
+  //  case types.ADD_TASK_ERROR:
+  //   return {
+  //     ...state,
+  //     projectNew: false
+  //   };
+    // case types.REMOVE_TASK_START:
+    //   return {
+    //     ...state,
+    //     job: null
+    //   };
+    case types.REMOVE_TASK_SUCCESS:
+      const removeItem = () => {
+        let newTasks = state.projects[payload.projectId].items.filter( (item, index) => index !== payload.index);
+        return newTasks;
+      }
+     return {
+       ...state,
+       projects: {
+         ...state.projects,
+         [payload.projectId]: {
+           ...state.projects[payload.projectId],
+           items: removeItem()
+         }
+       }
+     };
+  //  case types.REMOVE_TASK_ERROR:
+  //   return {
+  //     ...state,
+  //     job: null
+  //   };
    default:
     return state;
   }
