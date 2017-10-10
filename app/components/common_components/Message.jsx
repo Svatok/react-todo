@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { dismissMessage } from '../actions/messages';
+import { dismissMessage } from '../../actions/messages';
 
 const Message = ({message, type, dismissMessage}) => (
   <div

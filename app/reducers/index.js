@@ -4,7 +4,6 @@ import { reducer as formReducer } from 'redux-form';
 
 import user from '../reducers/user';
 import projects from '../reducers/projects';
-import topic from '../reducers/topic';
 import message from '../reducers/message';
 import * as types from '../types';
 
@@ -25,7 +24,6 @@ const isFetching = (state = false, action) => {
 const rootReducer = combineReducers({
   form: formReducer,
   isFetching,
-  topic,
   user,
   message,
   routing,

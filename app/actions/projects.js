@@ -20,10 +20,6 @@ export const fetchProjects = () => (dispatch) => {
     });
 };
 
-export const newProject = () => (dispatch) => {
-  dispatch({ type: types.ADD_PROJECT_START });
-};
-
 export const addProject = ({title}) => (dispatch) => {
   return api()
     .post('/todos', { title })
@@ -71,8 +67,4 @@ export const removeProject = id => (dispatch) => {
     .catch(() => {
       dispatch({ type: types.REMOVE_PROJECT_ERROR });
     });
-};
-
-export const cancelNewProject = () => (dispatch) => {
-  dispatch({ type: types.ADD_PROJECT_CANCEL });
 };
