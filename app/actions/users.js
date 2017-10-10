@@ -1,6 +1,3 @@
-import { push } from 'react-router-redux';
-import { authService } from '../services';
-import { SubmissionError } from 'redux-form';
 import { browserHistory } from 'react-router';
 import api from '../services/api';
 import showFormErrors from '../utils/showFormErrors';
@@ -53,16 +50,17 @@ export const logOut = () => (dispatch) => {
   dispatch({ type: types.START_LOGOUT_USER });
   return api()
     .delete('/auth/sign_out')
-    .then((response) => {
+    .then(() => {
       deleteTokenFromCookies();
-      dispatch({
-        type: types.SUCCESS_LOGOUT_USER,
-        payload: response
-      });
+      dispatch({ type: types.SUCCESS_LOGOUT_USER });
       browserHistory.push('/');
     })
     .catch((error) => {
-      dispatch({
+      if (error.status === 404) {
+        dispatch({ type: types.SUCCESS_LOGOUT_USER });
+        return browserHistory.push('/');
+      }
+      return dispatch({
         type: types.ERROR_LOGOUT_USER,
         payload: error
       });
