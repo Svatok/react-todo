@@ -1,24 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { FormGroup, ControlLabel } from 'react-bootstrap';
 import NewTaskForm from './NewTaskForm';
+import EditProjectForm from './EditProjectForm';
 import TaskItem from './TaskItem';
-import { removeProject } from '../actions/projects';
+import { removeProject, startProjectEditing, cancelProjectEditing } from '../actions/projects';
 
 const ProjectItem = props => (
   <div className="project">
     <div className="project-header">
       <div className="project-field">
-        <h2 className="editable">
-          {props.title}
-        </h2>
+        { props.editingProject === props.id
+          ?
+            <EditProjectForm
+              projectId={props.id}
+              projectTitle={props.title}
+              form={`EditProjectForm_${props.id}`}
+            />
+          :
+            <h2>{props.title}</h2>
+        }
       </div>
-      <div className="control">
-        { (props.editingProject != props.id) &&
+      { (props.editingProject !== props.id) &&
+        <div className="control">
           <ul>
             <li>
-              <a className="edit"></a>
+              <a
+                onClick={() => props.startProjectEditing(props.id)}
+                className="edit"
+              />
             </li>
             <li>
               <a
@@ -27,23 +36,26 @@ const ProjectItem = props => (
               />
             </li>
           </ul>
-        }
-      </div>
-      <div className="control-editing">
-        { (props.editingProject === props.id) &&
+        </div>
+      }
+      { (props.editingProject === props.id) &&
+        <div className="control-editing">
           <ul>
             <li>
-              <a className="save"></a>
+              <a className="save" />
             </li>
             <li>
-              <a className="cancel"></a>
+              <a
+                onClick={() => props.cancelProjectEditing()}
+                className="cancel"
+              />
             </li>
           </ul>
-        }
-      </div>
+        </div>
+      }
     </div>
     <div className="tasks-container">
-      <NewTaskForm projectId={props.id} form={`AddTaskForm_${props.index}`}/>
+      <NewTaskForm projectId={props.id} form={`AddTaskForm_${props.index}`} />
       <div className="task-list">
         <table className="tasks">
           <tbody>
@@ -62,7 +74,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  removeProject
+  removeProject,
+  startProjectEditing,
+  cancelProjectEditing
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectItem)
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectItem);

@@ -4,7 +4,7 @@ import api from '../services/api';
 export const addTask = ({name, projectId}) => (dispatch) => {
   dispatch({ type: types.ADD_TASK_START });
   return api()
-    .post(`/todos/${projectId}/items`, { name } )
+    .post(`/todos/${projectId}/items`, { name })
     .then((response) => {
       dispatch({
         type: types.ADD_TASK_SUCCESS,
@@ -24,10 +24,17 @@ export const cancelTaskEditing = () => (dispatch) => {
   return dispatch({ type: types.UNSET_EDITING_STATUS_TO_TASK});
 };
 
-export const editTask = ({id, name, projectId, index}) => (dispatch) => {
+export const editTask = ({id, name = null, done = null, projectId, index}) => (dispatch) => {
   dispatch({ type: types.EDIT_TASK_START });
+  const params = {};
+  if (name) {
+    params.name = name;
+  }
+  if (done !== null) {
+    params.done = done;
+  }
   return api()
-    .put(`/todos/${projectId}/items/${id}`, { name })
+    .put(`/todos/${projectId}/items/${id}`, { ...params })
     .then((response) => {
       dispatch({
         type: types.EDIT_TASK_SUCCESS,

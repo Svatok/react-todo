@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { removeTask, startTaskEditing, cancelTaskEditing } from '../actions/tasks';
-import EditTaskForm from './EditTaskForm'
-
+import { removeTask, startTaskEditing, cancelTaskEditing, editTask } from '../actions/tasks';
+import EditTaskForm from './EditTaskForm';
 
 const TaskItem = props => (
   <tr className="task-item">
     <td className="task-status">
-      <input className="task-check" type="checkbox" />
-      <label></label>
+      <input
+        className="task-check"
+        type="checkbox"
+        checked={props.done}
+        onChange={() => props.editTask({id: props.id, done: !props.done, projectId: props.todo_id, index: props.index})}
+      />
+      <label />
     </td>
     <td className="task-name">
       <div className="left-border">
@@ -23,7 +27,10 @@ const TaskItem = props => (
               form={`EditTaskForm_${props.index}`}
             />
           :
-            <div className={classNames('task-name-text', (props.done && 'task-done'))}>
+            <div
+              onClick={() => props.editTask({id: props.id, done: !props.done, projectId: props.todo_id, index: props.index})}
+              className={classNames('task-name-text', (props.done && 'task-done'))}
+            >
               {props.name}
               <span className="label label-danger deadline" />
             </div>
@@ -81,6 +88,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   startTaskEditing,
   cancelTaskEditing,
+  editTask,
   removeTask
 };
 

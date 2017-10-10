@@ -55,6 +55,26 @@ export default function projects(state = initialState, {type, payload}) {
     //     ...state,
     //     job: null
     //   };
+    case types.SET_EDITING_STATUS_TO_PROJECT:
+      return {
+        ...state,
+        editingProject: payload
+      };
+    case types.UNSET_EDITING_STATUS_TO_PROJECT:
+      return {
+        ...state,
+        editingProject: null
+      };
+      case types.EDIT_PROJECT_SUCCESS: {
+        return {
+          ...state,
+          projects: {
+            ...state.projects,
+            [payload.id]: payload
+          },
+          editingProject: null
+        };
+      }
     case types.REMOVE_PROJECT_SUCCESS: {
       const removeProject = () => {
         const newProjects = Object.assign({}, state.projects);
