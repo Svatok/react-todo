@@ -5,29 +5,15 @@ import { reducer as formReducer } from 'redux-form';
 import user from '../reducers/user';
 import projects from '../reducers/projects';
 import message from '../reducers/message';
-import * as types from '../types';
+import request from '../reducers/request';
 
-const isFetching = (state = false, action) => {
-  switch (action.type) {
-    case types.CREATE_REQUEST:
-      return true;
-    case types.REQUEST_SUCCESS:
-    case types.REQUEST_FAILURE:
-      return false;
-    default:
-      return state;
-  }
-};
-
-// Combine reducers with routeReducer which keeps track of
-// router state
 const rootReducer = combineReducers({
   form: formReducer,
-  isFetching,
   user,
   message,
   routing,
-  projects
+  projects,
+  request
 });
 
 export default rootReducer;

@@ -6,7 +6,6 @@ import Footer from '../components/page_components/Footer';
 import Message from '../components/common_components/Message';
 import { logOut } from '../actions/users';
 
-
 const App = ({ children, user, logOutUser }) => {
   return (
     <div className="app">

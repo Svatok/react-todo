@@ -2,7 +2,7 @@ import * as types from '../types';
 import api from '../services/api';
 
 export const fetchProjects = () => (dispatch) => {
-  dispatch({ type: types.FETCH_PROJECTS_START });
+  dispatch({ type: types.REQUEST_START });
   return api()
     .get('/todos')
     .then((response) => {
@@ -14,13 +14,15 @@ export const fetchProjects = () => (dispatch) => {
         type: types.FETCH_PROJECTS_SUCCESS,
         payload: projects
       });
+      dispatch({ type: types.REQUEST_SUCCESS });
     })
     .catch(() => {
-      dispatch({ type: types.FETCH_PROJECTS_ERROR });
+      dispatch({ type: types.REQUEST_ERROR });
     });
 };
 
 export const addProject = ({title}) => (dispatch) => {
+  dispatch({ type: types.REQUEST_START });
   return api()
     .post('/todos', { title })
     .then((response) => {
@@ -28,9 +30,10 @@ export const addProject = ({title}) => (dispatch) => {
         type: types.ADD_PROJECT_SUCCESS,
         payload: response.data
       });
+      dispatch({ type: types.REQUEST_SUCCESS });
     })
     .catch(() => {
-      dispatch({ type: types.ADD_PROJECT_ERROR });
+      dispatch({ type: types.REQUEST_ERROR });
     });
 };
 
@@ -43,7 +46,7 @@ export const cancelProjectEditing = () => (dispatch) => {
 };
 
 export const editProject = ({id, title}) => (dispatch) => {
-  dispatch({ type: types.EDIT_PROJECT_START });
+  dispatch({ type: types.REQUEST_START });
   return api()
     .put(`/todos/${id}`, { title })
     .then((response) => {
@@ -51,20 +54,22 @@ export const editProject = ({id, title}) => (dispatch) => {
         type: types.EDIT_PROJECT_SUCCESS,
         payload: response.data
       });
+      dispatch({ type: types.REQUEST_SUCCESS });
     })
     .catch(() => {
-      dispatch({ type: types.EDIT_PROJECT_ERROR });
+      dispatch({ type: types.REQUEST_ERROR });
     });
 };
 
 export const removeProject = id => (dispatch) => {
-  dispatch({ type: types.REMOVE_PROJECT_START });
+  dispatch({ type: types.REQUEST_START });
   return api()
     .delete(`/todos/${id}`)
     .then(() => {
       dispatch({ type: types.REMOVE_PROJECT_SUCCESS, payload: id });
+      dispatch({ type: types.REQUEST_SUCCESS });
     })
     .catch(() => {
-      dispatch({ type: types.REMOVE_PROJECT_ERROR });
+      dispatch({ type: types.REQUEST_ERROR });
     });
 };
