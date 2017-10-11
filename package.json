@@ -56,6 +56,7 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.24.1",
     "bcrypt-nodejs": "0.0.3",
+    "better-react-spinkit": "^2.0.2",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
