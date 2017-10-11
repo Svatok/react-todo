@@ -5,7 +5,6 @@ const initialState = {
   fetching: false,
   projects: {},
   project: null,
-  projectNew: false,
   editingProject: null,
   editingTask: null
 };
@@ -33,8 +32,7 @@ export default function projects(state = initialState, {type, payload}) {
       };
     case types.ADD_PROJECT_START:
       return {
-        ...state,
-        projectNew: true
+        ...state
       };
     case types.ADD_PROJECT_SUCCESS:
       return {
@@ -43,12 +41,7 @@ export default function projects(state = initialState, {type, payload}) {
           ...state.projects,
           [payload.id]: payload
         },
-        projectNew: false
-      };
-    case types.ADD_PROJECT_CANCEL:
-      return {
-        ...state,
-        projectNew: false
+        editingProject: null
       };
     // case types.REMOVE_PROJECT_START:
     //   return {

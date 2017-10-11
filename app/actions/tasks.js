@@ -10,6 +10,7 @@ export const addTask = ({name, projectId}) => (dispatch) => {
         type: types.ADD_TASK_SUCCESS,
         payload: response.data
       });
+      // dispatch(reset(formName));
     })
     .catch(() => {
       dispatch({ type: types.ADD_TASK_ERROR });
@@ -46,7 +47,7 @@ export const editTask = ({id, name = null, done = null, projectId, index}) => (d
     });
 };
 
-export const removeTask = (id, projectId, index) => (dispatch) => {
+export const removeTask = ({id, projectId, index}) => (dispatch) => {
   dispatch({ type: types.REMOVE_TASK_START });
   return api()
     .delete(`/todos/${projectId}/items/${id}`)

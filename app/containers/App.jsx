@@ -1,27 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Navigation from '../containers/Navigation';
-import Logo from '../containers/Logo';
-import Footer from '../containers/Footer';
-import Message from '../containers/Message';
+import { connect } from 'react-redux';
+import Navigation from '../components/page_components/Navigation';
+import Logo from '../components/page_components/Logo';
+import Footer from '../components/page_components/Footer';
+import Message from '../components/common_components/Message';
+import { logOut } from '../actions/users';
 
 
-/*
- * React-router's <Router> component renders <Route>'s
- * and replaces `this.props.children` with the proper React Component.
- *
- * Please refer to `routes.jsx` for the route config.
- *
- * A better explanation of react-router is available here:
- * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md
- */
-const App = ({ children }) => {
+const App = ({ children, user, logOutUser }) => {
   return (
-    <div className='app'>
-      <Navigation />
+    <div className="app">
+      <Navigation user={user} logOutUser={logOutUser} />
       <Logo />
       <Message />
-      <div className='container'>
+      <div className="container">
         {children}
       </div>
       <Footer />
@@ -29,8 +21,12 @@ const App = ({ children }) => {
   );
 };
 
-App.propTypes = {
-  children: PropTypes.object
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = {
+  logOutUser: logOut
 };
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

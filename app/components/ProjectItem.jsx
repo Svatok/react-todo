@@ -1,82 +1,63 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import NewTaskForm from './NewTaskForm';
-import EditProjectForm from './EditProjectForm';
+import NewTaskForm from './forms/task/NewTaskForm';
+import EditProjectForm from './forms/project/EditProjectForm';
 import TaskItem from './TaskItem';
-import { removeProject, startProjectEditing, cancelProjectEditing } from '../actions/projects';
+import ControlElements from './control_elements/ControlElements';
 
-const ProjectItem = props => (
-  <div className="project">
-    <div className="project-header">
-      <div className="project-field">
-        { props.editingProject === props.id
-          ?
-            <EditProjectForm
-              projectId={props.id}
-              projectTitle={props.title}
-              form={`EditProjectForm_${props.id}`}
-            />
-          :
-            <h2>{props.title}</h2>
-        }
-      </div>
-      { (props.editingProject !== props.id) &&
-        <div className="control">
-          <ul>
-            <li>
-              <a
-                onClick={() => props.startProjectEditing(props.id)}
-                className="edit"
+const ProjectItem = (props) => {
+  const { projectActions, id, editingProject, index, items, ...other } = props;
+
+  return (
+    <div className="project">
+      <div className="project-header">
+        <div className="project-field">
+          { props.editingProject === props.id
+            ?
+              <EditProjectForm
+                editProject={props.projectActions.editProject}
+                addProject={props.projectActions.addProject}
+                projectId={props.id}
+                projectTitle={props.title}
+                form={`EditProjectForm_${props.id}`}
               />
-            </li>
-            <li>
-              <a
-                onClick={() => props.removeProject(props.id)}
-                className="delete"
-              />
-            </li>
-          </ul>
+            :
+              <h2>{props.title}</h2>
+          }
         </div>
-      }
-      { (props.editingProject === props.id) &&
-        <div className="control-editing">
-          <ul>
-            <li>
-              <a className="save" />
-            </li>
-            <li>
-              <a
-                onClick={() => props.cancelProjectEditing()}
-                className="cancel"
-              />
-            </li>
-          </ul>
+        <ControlElements
+          elementType="project"
+          editingId={props.editingProject}
+          elementId={props.id}
+          startEditing={() => props.projectActions.startProjectEditing(props.id)}
+          remove={() => props.projectActions.removeProject(props.id)}
+          cancelEditing={() => props.projectActions.cancelProjectEditing()}
+        />
+      </div>
+      { props.id !== 'new' &&
+        <div className="tasks-container">
+          <NewTaskForm
+            addTask={props.taskActions.addTask}
+            projectId={props.id}
+            form={`AddTaskForm_${props.index}`}
+          />
+          <div className="task-list">
+            <table className="tasks">
+              <tbody>
+                {props.items.map((item, taskIndex) => (
+                  <TaskItem {...other} {...item} key={item.id} index={taskIndex} />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       }
     </div>
-    <div className="tasks-container">
-      <NewTaskForm projectId={props.id} form={`AddTaskForm_${props.index}`} />
-      <div className="task-list">
-        <table className="tasks">
-          <tbody>
-            {props.items.map((item, index) => (
-              <TaskItem key={item.id} index={index} {...item} />
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-);
-
-const mapStateToProps = state => ({
-  editingProject: state.projects.editingProject
-});
-
-const mapDispatchToProps = {
-  removeProject,
-  startProjectEditing,
-  cancelProjectEditing
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectItem);
+ProjectItem.defaultProps = {
+  id: 'new',
+  title: ''
+};
+
+export default ProjectItem;

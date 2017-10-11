@@ -1,95 +1,59 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { removeTask, startTaskEditing, cancelTaskEditing, editTask } from '../actions/tasks';
-import EditTaskForm from './EditTaskForm';
+import EditTaskForm from './forms/task/EditTaskForm';
+import ControlElements from './control_elements/ControlElements';
 
-const TaskItem = props => (
-  <tr className="task-item">
-    <td className="task-status">
-      <input
-        className="task-check"
-        type="checkbox"
-        checked={props.done}
-        onChange={() => props.editTask({id: props.id, done: !props.done, projectId: props.todo_id, index: props.index})}
-      />
-      <label />
-    </td>
-    <td className="task-name">
-      <div className="left-border">
-        { props.editingTask === props.id
-          ?
-            <EditTaskForm
-              itemId={props.id}
-              itemText={props.name}
-              projectId={props.todo_id}
-              index={props.index}
-              form={`EditTaskForm_${props.index}`}
-            />
-          :
-            <div
-              onClick={() => props.editTask({id: props.id, done: !props.done, projectId: props.todo_id, index: props.index})}
-              className={classNames('task-name-text', (props.done && 'task-done'))}
-            >
-              {props.name}
-              <span className="label label-danger deadline" />
-            </div>
-        }
-      </div>
-    </td>
-    <td className="task-control">
-      { (props.editingTask !== props.id) &&
-        <div className="control">
-          <ul>
-            <li>
-              <a className="sort"></a>
-            </li>
-            <li>
-              <a
-                onClick={() => props.startTaskEditing(props.id)}
-                className="edit"
+const TaskItem = (props) => {
+  const mainData = {
+    id: props.id,
+    projectId: props.todo_id,
+    index: props.index
+  };
+
+  return (
+    <tr className="task-item">
+      <td className="task-status">
+        <input
+          className="task-check"
+          type="checkbox"
+          checked={props.done}
+          onChange={() => props.taskActions.editTask({ done: !props.done, ...mainData })}
+        />
+        <label />
+      </td>
+      <td className="task-name">
+        <div className="left-border">
+          { props.editingTask === props.id
+            ?
+              <EditTaskForm
+                {...mainData}
+                editTask={props.taskActions.editTask}
+                itemText={props.name}
+                form={`EditTaskForm_${props.index}`}
               />
-            </li>
-            <li>
-              <a className="comment"></a>
-            </li>
-            <li>
-              <a
-                onClick={() => props.removeTask(props.id, props.todo_id, props.index)}
-                className="delete"
-              />
-            </li>
-          </ul>
+            :
+              <div
+                onClick={() => props.taskActions.editTask({ done: !props.done, ...mainData })}
+                className={classNames('task-name-text', (props.done && 'task-done'))}
+              >
+                {props.name}
+                <span className="label label-danger deadline" />
+              </div>
+          }
         </div>
-      }
-      { (props.editingTask === props.id) &&
-        <div className="control-editing">
-          <ul>
-            <li>
-              <a className="save"></a>
-            </li>
-            <li>
-              <a
-                onClick={() => props.cancelTaskEditing()}
-                className="cancel"
-              />
-            </li>
-          </ul>
-        </div>
-      }
-    </td>
-  </tr>
-);
-
-const mapStateToProps = state => ({
-  editingTask: state.projects.editingTask
-});
-
-const mapDispatchToProps = {
-  startTaskEditing,
-  cancelTaskEditing,
-  editTask,
-  removeTask
+      </td>
+      <td className="task-control">
+        <ControlElements
+          elementType="task"
+          editingId={props.editingTask}
+          elementId={props.id}
+          startEditing={() => props.taskActions.startTaskEditing(props.id)}
+          remove={() => props.taskActions.removeTask({...mainData})}
+          cancelEditing={() => props.taskActions.cancelTaskEditing()}
+        />
+      </td>
+    </tr>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskItem)
+export default TaskItem;
