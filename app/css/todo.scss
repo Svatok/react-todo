@@ -32,7 +32,7 @@
     position: relative;
 
     .project-field {
-      background: transparent image-url('icon-project.png') no-repeat 15px 50%;
+      background: transparent url('../images/icon-project.png') no-repeat 15px 50%;
       padding: 0 80px 0 45px;
 
     }
@@ -80,19 +80,19 @@
       }
 
       .edit {
-        background: image-url('icon-project-edit.png') no-repeat 50% 50%;
+        background: url('../images/icon-project-edit.png') no-repeat 50% 50%;
         cursor: pointer;
       }
       .save {
-        background: image-url('icon-project-save.png') no-repeat 50% 50%;
+        background: url('../images/icon-project-save.png') no-repeat 50% 50%;
         cursor: pointer;
       }
       .cancel {
-        background: image-url('icon-project-cancel.png') no-repeat 50% 50%;
+        background: url('../images/icon-project-cancel.png') no-repeat 50% 50%;
         cursor: pointer;
       }
       .delete {
-        background: image-url('icon-project-delete.png') no-repeat 50% 50%;
+        background: url('../images/icon-project-delete.png') no-repeat 50% 50%;
         cursor: pointer;
       }
     }
@@ -126,7 +126,7 @@
     padding: 8px 15px 0;
 
     .create-task-in {
-      background: image-url('icon-plus.png') no-repeat 0 50%;
+      background: url('../images/icon-plus.png') no-repeat 0 50%;
       padding: 0 0 0 34px;
 
       input {
@@ -252,7 +252,7 @@
   }
 
   input[type="checkbox"] + label{
-    background: image-url("checkbox.png") 0 -16px no-repeat;
+    background: url('../images/checkbox.png') 0 -16px no-repeat;
     height: 16px;
     width: 17px;
     display: inline-block;
@@ -265,7 +265,7 @@
   }
 
   input[type="checkbox"]:checked + label{
-      background: image-url("checkbox.png") left top no-repeat;
+      background: url('../images/checkbox.png') left top no-repeat;
       height: 16px;
       width: 17px;
       display: inline-block;
@@ -342,34 +342,34 @@
   }
 
   .sort {
-    background: image-url('icon-task-sort.png') no-repeat 50% 50%;
+    background: url('../images/icon-task-sort.png') no-repeat 50% 50%;
     cursor: move;
     font-size: 3px;
   }
 
   .comment {
-    background: image-url('icon-task-comment.png') no-repeat 50% 50%;
+    background: url('../images/icon-task-comment.png') no-repeat 50% 50%;
     cursor: pointer;
     background-size: 100%;
   }
 
   .edit {
-    background: image-url('icon-task-edit.png') no-repeat 50% 50%;
+    background: url('../images/icon-task-edit.png') no-repeat 50% 50%;
     cursor: pointer;
   }
 
   .save {
-    background: image-url('icon-task-save.png') no-repeat 50% 50%;
+    background: url('../images/icon-task-save.png') no-repeat 50% 50%;
     cursor: pointer;
   }
 
   .cancel {
-    background: image-url('icon-task-cancel.png') no-repeat 50% 50%;
+    background: url('../images/icon-task-cancel.png') no-repeat 50% 50%;
     cursor: pointer;
   }
 
   .delete {
-    background: image-url('icon-task-delete.png') no-repeat 50% 50%;
+    background: url('../images/icon-task-delete.png') no-repeat 50% 50%;
   }
 }
 
@@ -397,7 +397,7 @@
 
 
   .icon-plus {
-      background: image-url('icon-plus-add.png') no-repeat;
+      background: url('../images/icon-plus-add.png') no-repeat;
       padding: 0px 0 10px 34px;
     }
 

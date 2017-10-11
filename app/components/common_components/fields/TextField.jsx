@@ -13,7 +13,7 @@ const TextField = ({
   meta: { touched, error },
   children
 }) => (
-  <FormGroup className={className}>
+  <div className={className}>
     { label && <ControlLabel>{label}</ControlLabel>}
     <input
       autoComplete={autoComplete}
@@ -25,7 +25,7 @@ const TextField = ({
     />
     {touched && error && <span className="help-block">{error}</span>}
     { children }
-  </FormGroup>
+  </div>
 );
 
 TextField.defaultProps = {

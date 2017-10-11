@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormGroup, ControlLabel } from 'react-bootstrap';
+import { removeTask } from '../actions/tasks';
 
-const TaskItem = () => (
-  <tr>
+const TaskItem = (props) => (
+  <tr className='task-item'>
     <td className="task-status">
       <input className="task-check" type="checkbox"/>
       <label></label>
@@ -11,46 +13,55 @@ const TaskItem = () => (
     <td className="task-name">
       <div className="left-border">
         <div className="task-name-text editable task-done">
-          fineOk
+          {props.name}
           <span className="label label-danger deadline"></span>
         </div>
       </div>
     </td>
     <td className="task-control">
       <div className="control">
-        <ul>
-          <li>
-            <a className="sort"></a>
-          </li>
-          <li>
-            <a className="edit"></a>
-          </li>
-          <li>
-            <a className="comment"></a>
-          </li>
-          <li>
-            <a className="delete"></a>
-          </li>
-        </ul>
+        { (props.editingTask != props.id) &&
+          <ul>
+            <li>
+              <a className="sort"></a>
+            </li>
+            <li>
+              <a className="edit"></a>
+            </li>
+            <li>
+              <a className="comment"></a>
+            </li>
+            <li>
+              <a
+                onClick={() => props.removeTask(props.id, props.todo_id, props.index)}
+                className="delete"
+              />
+            </li>
+          </ul>
+        }
       </div>
       <div className="control-editing">
-        <ul>
-          <li>
-            <a className="save"></a>
-          </li>
-          <li>
-            <a className="cancel"></a>
-          </li>
-        </ul>
+        { (props.editingTask === props.id) &&
+          <ul>
+            <li>
+              <a className="save"></a>
+            </li>
+            <li>
+              <a className="cancel"></a>
+            </li>
+          </ul>
+        }
       </div>
     </td>
   </tr>
 );
 
-TaskItem.defaultProps = {
+const mapStateToProps = state => {
+  editingTask: state.projects.editingTask
 };
 
-TaskItem.propTypes = {
+const mapDispatchToProps = {
+  removeTask
 };
 
-export default TaskItem;
+export default connect(mapStateToProps, mapDispatchToProps)(TaskItem)

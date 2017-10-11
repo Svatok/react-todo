@@ -3,6 +3,7 @@ import { routerReducer as routing } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import user from '../reducers/user';
+import projects from '../reducers/projects';
 import topic from '../reducers/topic';
 import message from '../reducers/message';
 import * as types from '../types';
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   topic,
   user,
   message,
-  routing
+  routing,
+  projects
 });
 
 export default rootReducer;
