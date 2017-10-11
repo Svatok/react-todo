@@ -4,10 +4,10 @@ import api from '../services/api';
 export const fetchProjects = () => (dispatch) => {
   dispatch({ type: types.FETCH_PROJECTS_START });
   return api()
-    .get('/todos' )
+    .get('/todos')
     .then((response) => {
-      let projects = {}
-      response.data.forEach((project, index) => (
+      const projects = {};
+      response.data.forEach(project => (
         projects[project.id] = project
       ));
       dispatch({
@@ -15,9 +15,8 @@ export const fetchProjects = () => (dispatch) => {
         payload: projects
       });
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch({ type: types.FETCH_PROJECTS_ERROR });
-      showFormErrors(error.data);
     });
 };
 
@@ -27,27 +26,49 @@ export const newProject = () => (dispatch) => {
 
 export const addProject = ({title}) => (dispatch) => {
   return api()
-    .post('/todos', { title } )
+    .post('/todos', { title })
     .then((response) => {
       dispatch({
         type: types.ADD_PROJECT_SUCCESS,
         payload: response.data
       });
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch({ type: types.ADD_PROJECT_ERROR });
-      showFormErrors(error.data);
+    });
+};
+
+export const startProjectEditing = id => (dispatch) => {
+  return dispatch({ type: types.SET_EDITING_STATUS_TO_PROJECT, payload: id });
+};
+
+export const cancelProjectEditing = () => (dispatch) => {
+  return dispatch({ type: types.UNSET_EDITING_STATUS_TO_PROJECT});
+};
+
+export const editProject = ({id, title}) => (dispatch) => {
+  dispatch({ type: types.EDIT_PROJECT_START });
+  return api()
+    .put(`/todos/${id}`, { title })
+    .then((response) => {
+      dispatch({
+        type: types.EDIT_PROJECT_SUCCESS,
+        payload: response.data
+      });
+    })
+    .catch(() => {
+      dispatch({ type: types.EDIT_PROJECT_ERROR });
     });
 };
 
 export const removeProject = id => (dispatch) => {
   dispatch({ type: types.REMOVE_PROJECT_START });
   return api()
-    .delete(`/todos/${id}` )
+    .delete(`/todos/${id}`)
     .then(() => {
       dispatch({ type: types.REMOVE_PROJECT_SUCCESS, payload: id });
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch({ type: types.REMOVE_PROJECT_ERROR });
     });
 };
