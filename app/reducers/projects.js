@@ -1,8 +1,6 @@
 import * as types from '../types';
 
 const initialState = {
-  // fetched: false,
-  // fetching: false,
   projects: {},
   editingProject: null,
   editingTask: null
@@ -10,31 +8,11 @@ const initialState = {
 
 export default function projects(state = initialState, {type, payload}) {
   switch (type) {
-    // case types.FETCH_PROJECTS_START:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: true
-    //   };
     case types.FETCH_PROJECTS_SUCCESS:
       return {
         ...state,
-        // fetched: true,
-        // fetching: false,
         projects: payload
       };
-    // case types.FETCH_PROJECTS_ERROR:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: false
-    //   };
-    // case types.ADD_PROJECT_START:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: true
-    //   };
     case types.ADD_PROJECT_SUCCESS:
       return {
         ...state,
@@ -44,12 +22,6 @@ export default function projects(state = initialState, {type, payload}) {
         },
         editingProject: null
       };
-    // case types.ADD_PROJECT_ERROR:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: false
-    //   };
     case types.SET_EDITING_STATUS_TO_PROJECT:
       return {
         ...state,
@@ -60,12 +32,6 @@ export default function projects(state = initialState, {type, payload}) {
         ...state,
         editingProject: null
       };
-    // case types.EDIT_PROJECT_START:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: true
-    //   };
     case types.EDIT_PROJECT_SUCCESS: {
       console.log(payload);
       return {
@@ -77,18 +43,6 @@ export default function projects(state = initialState, {type, payload}) {
         editingProject: null
       };
     }
-    // case types.EDIT_PROJECT_ERROR:
-    //    return {
-    //      ...state,
-    //      fetched: false,
-    //      fetching: false
-    //  };
-    // case types.REMOVE_PROJECT_START:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: true
-    //   };
     case types.REMOVE_PROJECT_SUCCESS: {
       const removeProject = () => {
         const newProjects = Object.assign({}, state.projects);
@@ -100,18 +54,6 @@ export default function projects(state = initialState, {type, payload}) {
         projects: removeProject()
       };
     }
-  //  case types.REMOVE_PROJECT_ERROR:
-  //     return {
-  //       ...state,
-  //       fetched: false,
-  //       fetching: false
-  //   };
-  //   case types.ADD_TASK_START:
-  //     return {
-  //       ...state,
-  //       fetched: false,
-  //       fetching: true
-  //     };
     case types.ADD_TASK_SUCCESS: {
       const insertItem = () => {
         const newTasks = state.projects[payload.todo_id].items.slice();
@@ -129,12 +71,6 @@ export default function projects(state = initialState, {type, payload}) {
         }
       };
     }
-    // case types.ADD_TASK_ERROR:
-    //    return {
-    //      ...state,
-    //      fetched: false,
-    //      fetching: false
-    //  };
     case types.SET_EDITING_STATUS_TO_TASK:
       return {
         ...state,
@@ -145,12 +81,6 @@ export default function projects(state = initialState, {type, payload}) {
         ...state,
         editingTask: null
       };
-    // case types.EDIT_TASK_START:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: true
-    //   };
     case types.EDIT_TASK_SUCCESS: {
       const updateItem = () => {
         return state.projects[payload.task.todo_id].items.map((item, index) => {
@@ -175,19 +105,6 @@ export default function projects(state = initialState, {type, payload}) {
         editingTask: null
       };
     }
-    // case types.EDIT_TASK_ERROR:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: false,
-    //     editingTask: null
-    //   };
-    // case types.REMOVE_TASK_START:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: true
-    //   };
     case types.REMOVE_TASK_SUCCESS: {
       const removeItem = () => {
         const newTasks = state.projects[payload.projectId].items.filter((item, index) => index !== payload.index);
@@ -204,12 +121,6 @@ export default function projects(state = initialState, {type, payload}) {
         }
       };
     }
-    // case types.REMOVE_TASK_ERROR:
-    //   return {
-    //     ...state,
-    //     fetched: false,
-    //     fetching: false
-    //   };
     default:
       return state;
   }
