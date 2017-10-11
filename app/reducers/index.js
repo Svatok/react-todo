@@ -4,13 +4,13 @@ import { reducer as formReducer } from 'redux-form';
 
 import user from '../reducers/user';
 import projects from '../reducers/projects';
-import message from '../reducers/message';
+import alert from '../reducers/alert';
 import request from '../reducers/request';
 
 const rootReducer = combineReducers({
   form: formReducer,
   user,
-  message,
+  alert,
   routing,
   projects,
   request

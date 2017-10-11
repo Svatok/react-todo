@@ -113,3 +113,11 @@ a[ng-click]{
   height: 100%;
   background-color: rgba(0,0,0,0.3);
 }
+
+.alert-message {
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  margin: 0 20px;
+}
