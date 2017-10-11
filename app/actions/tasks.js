@@ -2,7 +2,7 @@ import * as types from '../types';
 import api from '../services/api';
 
 export const addTask = ({name, projectId}) => (dispatch) => {
-  dispatch({ type: types.ADD_TASK_START });
+  dispatch({ type: types.REQUEST_START });
   return api()
     .post(`/todos/${projectId}/items`, { name })
     .then((response) => {
@@ -10,10 +10,11 @@ export const addTask = ({name, projectId}) => (dispatch) => {
         type: types.ADD_TASK_SUCCESS,
         payload: response.data
       });
+      dispatch({ type: types.REQUEST_SUCCESS });
       // dispatch(reset(formName));
     })
     .catch(() => {
-      dispatch({ type: types.ADD_TASK_ERROR });
+      dispatch({ type: types.REQUEST_ERROR });
     });
 };
 
@@ -26,7 +27,7 @@ export const cancelTaskEditing = () => (dispatch) => {
 };
 
 export const editTask = ({id, name = null, done = null, projectId, index}) => (dispatch) => {
-  dispatch({ type: types.EDIT_TASK_START });
+  dispatch({ type: types.REQUEST_START });
   const params = {};
   if (name) {
     params.name = name;
@@ -41,20 +42,22 @@ export const editTask = ({id, name = null, done = null, projectId, index}) => (d
         type: types.EDIT_TASK_SUCCESS,
         payload: {task: response.data, index}
       });
+      dispatch({ type: types.REQUEST_SUCCESS });
     })
     .catch(() => {
-      dispatch({ type: types.EDIT_TASK_ERROR });
+      dispatch({ type: types.REQUEST_ERROR });
     });
 };
 
 export const removeTask = ({id, projectId, index}) => (dispatch) => {
-  dispatch({ type: types.REMOVE_TASK_START });
+  dispatch({ type: types.REQUEST_START });
   return api()
     .delete(`/todos/${projectId}/items/${id}`)
     .then(() => {
       dispatch({ type: types.REMOVE_TASK_SUCCESS, payload: { projectId, index } });
+      dispatch({ type: types.REQUEST_SUCCESS });
     })
     .catch(() => {
-      dispatch({ type: types.REMOVE_TASK_ERROR });
+      dispatch({ type: types.REQUEST_ERROR });
     });
 };
