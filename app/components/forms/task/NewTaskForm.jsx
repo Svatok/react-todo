@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from '../../../components/common_components/fields';
+import { required } from '../../../utils/validation';
 
 const NewTaskForm = props => (
   <div>
@@ -17,6 +18,9 @@ const NewTaskForm = props => (
             type="text"
             placeholder="Start typing here to create a task..."
             component={TextField}
+            validate={[required]}
+            clearError={() => props.clearSubmitErrors({})}
+            errorMessageType="alert"
           />
           <span className="input-group-btn add-task">
             <button className="btn add-task" type="submit">Add Task</button>
@@ -29,7 +33,8 @@ const NewTaskForm = props => (
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
-    projectId: ownProps.projectId
+    projectId: ownProps.projectId,
+    form: ownProps.form
   }
 });
 
