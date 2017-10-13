@@ -39,6 +39,7 @@ const ProjectItem = (props) => {
             addTask={props.taskActions.addTask}
             projectId={props.id}
             form={`AddTaskForm_${props.index}`}
+            submitFailed={false}
           />
           <div className="task-list">
             <table className="tasks">

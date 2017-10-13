@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ControlLabel } from 'react-bootstrap';
-import AlertMessage from '../AlertMessage';
 
 const TextField = ({
   autoComplete,
@@ -12,9 +11,7 @@ const TextField = ({
   placeholder,
   type,
   meta: { touched, error },
-  children,
-  errorMessageType,
-  clearError
+  children
 }) => (
   <div className={className}>
     { label && <ControlLabel>{label}</ControlLabel>}
@@ -26,20 +23,13 @@ const TextField = ({
       type={type}
       {...input}
     />
-    { touched && error &&
-        <AlertMessage
-          message={error}
-          bsStyle="danger"
-          onDismiss={this.props.clearError}
-        />
-    }
+    {touched && error && <span className="help-block">{error}</span>}
     { children }
   </div>
 );
 
 TextField.defaultProps = {
-  type: 'text',
-  errorMessageType: 'help-block'
+  type: 'text'
 };
 
 TextField.propTypes = {
