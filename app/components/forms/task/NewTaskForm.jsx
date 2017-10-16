@@ -1,64 +1,37 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from '../../../components/common_components/fields';
-import AlertMessage from '../../common_components/AlertMessage';
+import * as types from '../../../types';
 
-class NewTaskForm extends Component {
-  constructor(props) {
-    super(props);
-    this.clearError = this.clearError.bind(this);
-    this.submitForm = this.submitForm.bind(this);
-    this.state = {
-      error: null
-    };
-  }
-
-  clearError() {
-    this.setState({error: null });
-  }
-
-  submitForm(values) {
-    if (values.name) {
-      this.setState({error: null });
-      return this.props.addTask(values);
-    }
-    return this.setState({error: 'Required' });
-  }
-
-  render() {
-    return (
-      <div>
-        { this.state.error &&
-          <AlertMessage
-            message={this.state.error}
-            bsStyle="danger"
-            onDismiss={() => this.clearError()}
-          />
-        }
-        <form
-          className="new_task"
-          noValidate
-          onSubmit={this.props.handleSubmit(this.submitForm)}
-        >
-          <div className="create-task-header">
-            <div className="create-task-in input-group">
-              <Field
-                name="name"
-                type="text"
-                placeholder="Start typing here to create a task..."
-                component={TextField}
-              />
-              <span className="input-group-btn add-task">
-                <button className="btn add-task" type="submit">Add Task</button>
-              </span>
-            </div>
-          </div>
-        </form>
+const NewTaskForm = props => (
+  <form
+    className="new_task"
+    noValidate
+    onSubmit={props.handleSubmit}
+  >
+    <div className="create-task-header">
+      <div className="create-task-in input-group">
+        <Field
+          name="name"
+          type="text"
+          placeholder="Start typing here to create a task..."
+          component={TextField}
+        />
+        <span className="input-group-btn add-task">
+          <button className="btn add-task" type="submit">Add Task</button>
+        </span>
       </div>
-    );
+    </div>
+  </form>
+);
+
+const formSubmit = (values, dispatch, props) => {
+  if (values.name) {
+    return props.addTask(values);
   }
-}
+  return dispatch({ type: types.ADD_ERROR, payload: 'Task name must be present!' });
+};
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
@@ -66,4 +39,6 @@ const mapStateToProps = (state, ownProps) => ({
   }
 });
 
-export default connect(mapStateToProps)(reduxForm()(NewTaskForm));
+export default connect(mapStateToProps)(reduxForm({
+  onSubmit: formSubmit
+})(NewTaskForm));

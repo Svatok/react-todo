@@ -1,4 +1,5 @@
 import React from 'react';
+import { submit } from 'redux-form';
 import NewTaskForm from './forms/task/NewTaskForm';
 import EditProjectForm from './forms/project/EditProjectForm';
 import TaskItem from './TaskItem';
@@ -30,6 +31,7 @@ const ProjectItem = (props) => {
           elementId={props.id}
           startEditing={() => props.projectActions.startProjectEditing(props.id)}
           remove={() => props.projectActions.removeProject(props.id)}
+          save={() => props.dispatch(submit(`EditProjectForm_${props.id}`))}
           cancelEditing={() => props.projectActions.cancelProjectEditing()}
         />
       </div>

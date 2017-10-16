@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from '../../../components/common_components/fields';
+import * as types from '../../../types';
 
 const EditProjectForm = props => (
   <form
     noValidate
-    onSubmit={props.handleSubmit((props.projectId === 'new') ? props.addProject : props.editProject)}
+    onSubmit={props.handleSubmit}
   >
     <Field
       name="title"
@@ -16,6 +17,13 @@ const EditProjectForm = props => (
   </form>
 );
 
+const formSubmit = (values, dispatch, props) => {
+  if (values.title) {
+    return (props.projectId === 'new') ? props.addProject(values) : props.editProject(values);
+  }
+  return dispatch({ type: types.ADD_ERROR, payload: 'Project title must be present!' });
+};
+
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
     id: ownProps.projectId,
@@ -23,4 +31,6 @@ const mapStateToProps = (state, ownProps) => ({
   }
 });
 
-export default connect(mapStateToProps)(reduxForm()(EditProjectForm));
+export default connect(mapStateToProps)(reduxForm({
+  onSubmit: formSubmit
+})(EditProjectForm));
