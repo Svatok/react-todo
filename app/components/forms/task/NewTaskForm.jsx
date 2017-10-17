@@ -28,6 +28,7 @@ const NewTaskForm = props => (
 
 const formSubmit = (values, dispatch, props) => {
   if (values.name) {
+    values.form = props.form;
     return props.addTask(values);
   }
   return dispatch({ type: types.ADD_ERROR, payload: 'Task name must be present!' });

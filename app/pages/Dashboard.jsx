@@ -12,12 +12,12 @@ class Dashboard extends Component {
   }
 
   pageTitle = () => {
-    return 'Dashboard | reactGo';
+    return 'Dashboard | ToDo';
   };
 
   pageMeta = () => {
     return [
-      { name: 'description', content: 'A reactGo example of a dashboard page' }
+      { name: 'description', content: 'ToDo App' }
     ];
   };
 
@@ -35,4 +35,3 @@ class Dashboard extends Component {
 }
 
 export default Dashboard;
-
