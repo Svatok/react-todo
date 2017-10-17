@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { submit } from 'redux-form';
 import NewTaskForm from './forms/task/NewTaskForm';
 import EditProjectForm from './forms/project/EditProjectForm';
@@ -63,4 +64,4 @@ ProjectItem.defaultProps = {
   title: ''
 };
 
-export default ProjectItem;
+export default connect()(ProjectItem);
