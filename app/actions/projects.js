@@ -18,7 +18,7 @@ export const fetchProjects = () => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
-      dispatch({ type: types.ADD_ERROR, payload: error.data });
+      dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };
 
@@ -35,7 +35,7 @@ export const addProject = ({title}) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
-      dispatch({ type: types.ADD_ERROR, payload: error.data });
+      dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };
 
@@ -60,7 +60,7 @@ export const editProject = ({id, title}) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
-      dispatch({ type: types.ADD_ERROR, payload: error.data });
+      dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };
 
@@ -75,6 +75,6 @@ export const removeProject = id => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
-      dispatch({ type: types.ADD_ERROR, payload: error.data });
+      dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };

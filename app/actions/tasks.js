@@ -16,7 +16,7 @@ export const addTask = ({name, projectId, form}) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
-      dispatch({ type: types.ADD_ERROR, payload: error.data });
+      dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };
 
@@ -48,7 +48,7 @@ export const editTask = ({id, name = null, done = null, projectId, index}) => (d
     })
     .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
-      dispatch({ type: types.ADD_ERROR, payload: error.data });
+      dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };
 
@@ -63,6 +63,6 @@ export const removeTask = ({id, projectId, index}) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
-      dispatch({ type: types.ADD_ERROR, payload: error.data });
+      dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };

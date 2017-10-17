@@ -1,6 +1,5 @@
 import { browserHistory } from 'react-router';
 import api from '../services/api';
-import showFormErrors from '../utils/showFormErrors';
 import { deleteTokenFromCookies } from '../utils/tokens';
 
 import * as types from '../types';
@@ -22,7 +21,7 @@ export const submitSignUp = ({ email, password, password_confirmation }, dispatc
     })
     .catch((error) => {
       dispatch({ type: types.ERROR_SIGNUP_USER });
-      showFormErrors(error.data.errors);
+      dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };
 
@@ -42,7 +41,7 @@ export const submitLogIn = ({ email, password }, dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: types.ERROR_LOGIN_USER });
-      showFormErrors(error.data.errors);
+      dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };
 
@@ -53,16 +52,14 @@ export const logOut = () => (dispatch) => {
     .then(() => {
       deleteTokenFromCookies();
       dispatch({ type: types.SUCCESS_LOGOUT_USER });
-      browserHistory.push('/');
+      browserHistory.push('/login');
     })
     .catch((error) => {
       if (error.status === 404) {
         dispatch({ type: types.SUCCESS_LOGOUT_USER });
-        return browserHistory.push('/');
+        return browserHistory.push('/login');
       }
-      return dispatch({
-        type: types.ERROR_LOGOUT_USER,
-        payload: error
-      });
+      dispatch({ type: types.ERROR_LOGOUT_USER });
+      return dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
 };

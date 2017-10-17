@@ -4,7 +4,6 @@ import { ControlLabel } from 'react-bootstrap';
 
 const TextField = ({
   autoComplete,
-  className,
   input,
   label,
   name,
@@ -13,7 +12,7 @@ const TextField = ({
   meta: { touched, error },
   children
 }) => (
-  <div className={className}>
+  <div className={touched && error && 'has-error'}>
     { label && <ControlLabel>{label}</ControlLabel>}
     <input
       autoComplete={autoComplete}
