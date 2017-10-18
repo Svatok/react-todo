@@ -34,6 +34,10 @@ function createRequestPromise(method, url, data, cookiesManager, { params, multi
     uid: cookiesManager.get('uid'),
     expiry: cookiesManager.get('expiry'),
     client: cookiesManager.get('client'),
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': true,
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+    'Access-Control-Allow-Headers': 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json',
     ...headers
   };
 
