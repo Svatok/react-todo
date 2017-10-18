@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 import { Field, reduxForm } from 'redux-form';
 import { Button } from 'react-bootstrap';
 import { TextField, PasswordField } from '../components/common_components/fields';
@@ -10,14 +9,7 @@ import { required, email, minLength6 } from '../utils/validation';
 
 const SignUp = props => (
   <div className="authform">
-    { props.error &&
-      <div className="alert alert-danger mb-0" role="alert">
-        <i className="icon icon-round-notice font-18 mr-15" />
-        {props.error}
-      </div>
-    }
     <form
-      className={classNames({'has-error': props.formHasError})}
       noValidate
       onSubmit={props.handleSubmit(submitSignUp)}
     >
@@ -49,14 +41,10 @@ const SignUp = props => (
   </div>
 );
 
-const mapStateToProps = state => ({
-  formHasError: state.form.signUp && (state.form.signUp.syncErrors || state.form.signUp.submitErrors)
-});
-
 const mapDispatchToProps = {
   submitSignUp
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
+export default connect(null, mapDispatchToProps)(reduxForm({
   form: 'signUp'
 })(SignUp));
