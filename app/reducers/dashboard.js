@@ -34,7 +34,6 @@ export default function dashboard(state = initialState, {type, payload}) {
         editingProject: null
       };
     case types.EDIT_PROJECT_SUCCESS: {
-      console.log(payload);
       return {
         ...state,
         projects: {
