@@ -16,8 +16,9 @@ export const fetchProjects = () => (dispatch) => {
       });
       dispatch({ type: types.REQUEST_SUCCESS });
     })
-    .catch(() => {
+    .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
+      dispatch({ type: types.ADD_ERROR, payload: error.data });
     });
 };
 
@@ -32,8 +33,9 @@ export const addProject = ({title}) => (dispatch) => {
       });
       dispatch({ type: types.REQUEST_SUCCESS });
     })
-    .catch(() => {
+    .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
+      dispatch({ type: types.ADD_ERROR, payload: error.data });
     });
 };
 
@@ -56,8 +58,9 @@ export const editProject = ({id, title}) => (dispatch) => {
       });
       dispatch({ type: types.REQUEST_SUCCESS });
     })
-    .catch(() => {
+    .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
+      dispatch({ type: types.ADD_ERROR, payload: error.data });
     });
 };
 
@@ -68,8 +71,10 @@ export const removeProject = id => (dispatch) => {
     .then(() => {
       dispatch({ type: types.REMOVE_PROJECT_SUCCESS, payload: id });
       dispatch({ type: types.REQUEST_SUCCESS });
+      dispatch({ type: types.ADD_SUCCESS, payload: 'Successful deleted!' });
     })
-    .catch(() => {
+    .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
+      dispatch({ type: types.ADD_ERROR, payload: error.data });
     });
 };

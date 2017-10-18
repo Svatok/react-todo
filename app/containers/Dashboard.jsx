@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import ProjectItem from '../components/ProjectItem';
-import { TextField } from '../components/common_components/fields';
-import { required } from '../utils/validation';
 import * as projectActions from '../actions/projects';
 import * as taskActions from '../actions/tasks';
 
@@ -40,7 +37,8 @@ class Dashboard extends Component {
         }
         <div className="row">
           <div className="col-xs-12 div_add_button_project">
-            <a onClick={() => this.props.projectActions.startProjectEditing('new')}
+            <a
+              onClick={() => this.props.projectActions.startProjectEditing('new')}
               className="btn btn-primary add-project"
             >
               <span className="icon-plus">Add TODO List</span>
@@ -66,6 +64,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
-  form: 'newProjectForm'
-})(Dashboard));
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

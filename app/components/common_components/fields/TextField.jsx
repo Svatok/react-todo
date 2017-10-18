@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, ControlLabel } from 'react-bootstrap';
+import { ControlLabel } from 'react-bootstrap';
 
 const TextField = ({
   autoComplete,

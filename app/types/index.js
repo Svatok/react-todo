@@ -1,4 +1,6 @@
-export const DISMISS_MESSAGE = 'DISMISS_MESSAGE';
+export const ADD_ERROR = 'ADD_ERROR';
+export const ADD_SUCCESS = 'ADD_SUCCESS';
+export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 export const REQUEST_START = 'REQUEST_START';
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS';

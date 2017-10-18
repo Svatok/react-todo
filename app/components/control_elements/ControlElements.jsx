@@ -1,6 +1,14 @@
 import React from 'react';
 
-const ControlElements = ({ elementType, editingId, elementId, startEditing, remove, cancelEditing }) => (
+const ControlElements = ({
+  elementType,
+  editingId,
+  elementId,
+  startEditing,
+  remove,
+  cancelEditing,
+  save
+}) => (
   <div>
     { (editingId !== elementId) &&
       <div className="control">
@@ -34,7 +42,10 @@ const ControlElements = ({ elementType, editingId, elementId, startEditing, remo
       <div className="control-editing">
         <ul>
           <li>
-            <a className="save" />
+            <a
+              onClick={save}
+              className="save"
+            />
           </li>
           <li>
             <a

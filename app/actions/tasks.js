@@ -1,7 +1,8 @@
+import {reset} from 'redux-form';
 import * as types from '../types';
 import api from '../services/api';
 
-export const addTask = ({name, projectId}) => (dispatch) => {
+export const addTask = ({name, projectId, form}) => (dispatch) => {
   dispatch({ type: types.REQUEST_START });
   return api()
     .post(`/todos/${projectId}/items`, { name })
@@ -11,10 +12,11 @@ export const addTask = ({name, projectId}) => (dispatch) => {
         payload: response.data
       });
       dispatch({ type: types.REQUEST_SUCCESS });
-      // dispatch(reset(formName));
+      dispatch(reset(form));
     })
-    .catch(() => {
+    .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
+      dispatch({ type: types.ADD_ERROR, payload: error.data });
     });
 };
 
@@ -44,8 +46,9 @@ export const editTask = ({id, name = null, done = null, projectId, index}) => (d
       });
       dispatch({ type: types.REQUEST_SUCCESS });
     })
-    .catch(() => {
+    .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
+      dispatch({ type: types.ADD_ERROR, payload: error.data });
     });
 };
 
@@ -55,9 +58,11 @@ export const removeTask = ({id, projectId, index}) => (dispatch) => {
     .delete(`/todos/${projectId}/items/${id}`)
     .then(() => {
       dispatch({ type: types.REMOVE_TASK_SUCCESS, payload: { projectId, index } });
+      dispatch({ type: types.ADD_SUCCESS, payload: 'Successful deleted!' });
       dispatch({ type: types.REQUEST_SUCCESS });
     })
-    .catch(() => {
+    .catch((error) => {
       dispatch({ type: types.REQUEST_ERROR });
+      dispatch({ type: types.ADD_ERROR, payload: error.data });
     });
 };

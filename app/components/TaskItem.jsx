@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { submit } from 'redux-form';
 import classNames from 'classnames';
 import EditTaskForm from './forms/task/EditTaskForm';
 import ControlElements from './control_elements/ControlElements';
@@ -49,6 +51,7 @@ const TaskItem = (props) => {
           elementId={props.id}
           startEditing={() => props.taskActions.startTaskEditing(props.id)}
           remove={() => props.taskActions.removeTask({...mainData})}
+          save={() => props.dispatch(submit(`EditTaskForm_${props.index}`))}
           cancelEditing={() => props.taskActions.cancelTaskEditing()}
         />
       </td>
@@ -56,4 +59,4 @@ const TaskItem = (props) => {
   );
 };
 
-export default TaskItem;
+export default connect()(TaskItem);
