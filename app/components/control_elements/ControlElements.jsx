@@ -15,7 +15,7 @@ const ControlElements = ({
         <ul>
           { (elementType === 'task') &&
             <li>
-              <a className="sort"></a>
+              <a className="sort" />
             </li>
           }
           <li>
@@ -26,7 +26,7 @@ const ControlElements = ({
           </li>
           { (elementType === 'task') &&
             <li>
-              <a className="comment"></a>
+              <a className="comment" />
             </li>
           }
           <li>

@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
+import persistState from 'redux-localstorage';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import { isClient, isDebug } from '../../config/app';
-import persistState from 'redux-localstorage';
 
 /*
  * @param {Object} initial state to bootstrap our stores with for server-side rendering

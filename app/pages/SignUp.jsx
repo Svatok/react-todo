@@ -12,12 +12,12 @@ class SignUp extends Component {
   }
 
   pageTitle = () => {
-    return 'Sign Up';
+    return 'Sign Up | ToDo App';
   };
 
   pageMeta = () => {
     return [
-      { name: 'description', content: 'A reactGo example of a login or register page' }
+      { name: 'description', content: 'ToDo App' }
     ];
   };
 

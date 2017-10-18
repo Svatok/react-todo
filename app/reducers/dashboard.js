@@ -6,7 +6,7 @@ const initialState = {
   editingTask: null
 };
 
-export default function projects(state = initialState, {type, payload}) {
+export default function dashboard(state = initialState, {type, payload}) {
   switch (type) {
     case types.FETCH_PROJECTS_SUCCESS:
       return {
@@ -25,7 +25,8 @@ export default function projects(state = initialState, {type, payload}) {
     case types.SET_EDITING_STATUS_TO_PROJECT:
       return {
         ...state,
-        editingProject: payload
+        editingProject: payload,
+        editingTask: null
       };
     case types.UNSET_EDITING_STATUS_TO_PROJECT:
       return {
@@ -74,7 +75,8 @@ export default function projects(state = initialState, {type, payload}) {
     case types.SET_EDITING_STATUS_TO_TASK:
       return {
         ...state,
-        editingTask: payload
+        editingTask: payload,
+        editingProject: null
       };
     case types.UNSET_EDITING_STATUS_TO_TASK:
       return {

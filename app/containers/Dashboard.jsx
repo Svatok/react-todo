@@ -51,10 +51,9 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  addingProject: state.projects.projectNew,
-  editingProject: state.projects.editingProject,
-  projects: state.projects.projects,
-  editingTask: state.projects.editingTask
+  projects: state.dashboard.projects,
+  editingProject: state.dashboard.editingProject,
+  editingTask: state.dashboard.editingTask
 });
 
 function mapDispatchToProps(dispatch) {
