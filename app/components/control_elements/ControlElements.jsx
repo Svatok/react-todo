@@ -1,4 +1,5 @@
 import React from 'react';
+import ModalCommnets from '../ModalComments';
 
 const ControlElements = ({
   elementType,
@@ -26,7 +27,7 @@ const ControlElements = ({
           </li>
           { (elementType === 'task') &&
             <li>
-              <a className="comment" />
+              <ModalCommnets />
             </li>
           }
           <li>
