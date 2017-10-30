@@ -2,6 +2,7 @@ import React from 'react';
 import ModalCommnets from '../ModalComments';
 
 const ControlElements = ({
+  mainData,
   elementType,
   editingId,
   elementId,
@@ -27,7 +28,7 @@ const ControlElements = ({
           </li>
           { (elementType === 'task') &&
             <li>
-              <ModalCommnets />
+              <ModalCommnets taskId={mainData.id} projectId={mainData.projectId} />
             </li>
           }
           <li>

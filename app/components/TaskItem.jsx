@@ -53,6 +53,7 @@ const TaskItem = (props) => {
           remove={() => props.taskActions.removeTask({...mainData})}
           save={() => props.dispatch(submit(`EditTaskForm_${props.index}`))}
           cancelEditing={() => props.taskActions.cancelTaskEditing()}
+          mainData={mainData}
         />
       </td>
     </tr>

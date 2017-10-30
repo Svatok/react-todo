@@ -4,6 +4,7 @@ import {
   Button,
   Modal,
 } from 'react-bootstrap';
+import CommentItem from './CommentItem';
 
 class ModalComments extends Component {
   constructor() {
@@ -43,7 +44,7 @@ class ModalComments extends Component {
               <div className="col-md-7">
                 <h4 className="details-block-name">Deadline:</h4>
                 <p className="input-group">
-                  <input className="form-control" type="text"/>
+                  <input className="form-control" type="text" />
                   <span className="input-group-btn">
                     <button className="btn btn-default" ng-click="im.open($event)" type="button">
                       <i className="glyphicon glyphicon-calendar"></i>
@@ -55,56 +56,19 @@ class ModalComments extends Component {
             <div className="row comments">
               <div className="col-md-12">
                 <h4 className="details-block-name">Comments:</h4>
-                <div className="row vertical-align coment-bottom-border">
-                  <div className="col-md-1 text-right">
-                    <a>
-                      <i className="fa fa-times"></i>
-                    </a>
+                {
+                  this.props.comments ?
+                  Object.keys(this.props.comments).map(id =>
+                    <CommentItem {...this.props.comments[id]} key={id} />
+                  )
+                  :
+                  <div className="row vertical-align no-comments">
+                    <div className="col-md-12 comment-text">No comments.</div>
                   </div>
-                  <div className="col-md-8 comment-text">
-                    First comment
-                  </div>
-                  <div className="col-md-3 text-center">
-                    <span>&nbsp;</span>
-                    <a className="attachment-button attachment-download" href="http://res.cloudinary.com/svatok/raw/upload/v1497567677/wxrcf7icc1ybkwydbddg">
-                      <i className="fa fa-paperclip"></i>
-                    </a>
-                  </div>
-                </div>
-                <div className="row vertical-align no-comments">
-                  <div className="col-md-12 comment-text">No comments.</div>
-                </div>
+                }
               </div>
             </div>
-            <div className="row add-comment">
-              <div className="col-md-12">
-                <h4 className="details-block-name">Add Comment:</h4>
-                <span></span>
-                <form>
-                  <div className="col-xs-9">
-                    <textarea className="form-control" name="commentText" placeholder="Your comment text ..." required></textarea>
-                  </div>
-                  <div className="col-xs-3 text-center comment-buttons">
-                    <div className="row">
-                      <a className="attachment-button">
-                        Attach File
-                        <i className="fa fa-save"></i>
-                      </a>
-                      <a className="attachment-button">
-                        Remove File
-                        <i className="fa fa-times"></i>
-                      </a>
-                    </div>
-                    <div className="row">
-                      <button className="btn btn-primary" type="submit">
-                        Add Comment
-                        <i className="fa fa-plus-square-o"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
+
           </Modal.Body>
         </Modal>
       </div>
