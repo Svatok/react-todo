@@ -33,8 +33,8 @@ export const addComment = ({projectId, taskId, commentText, attachment}, dispatc
         type: types.ADD_COMMENT_SUCCESS,
         payload: response.data
       });
-      dispatch(reset('newCommentForm'));
       dispatch(removeFile());
+      dispatch(reset('newCommentForm'));
       dispatch({ type: types.REQUEST_SUCCESS });
     })
     .catch((error) => {

@@ -7,5 +7,5 @@ export const addFile = data => (dispatch) => {
 
 export const removeFile = () => (dispatch) => {
   dispatch({ type: types.REMOVE_FILE });
-  dispatch(change('newCommentForm', 'file', null));
+  dispatch(change('newCommentForm', 'attachment', null));
 };

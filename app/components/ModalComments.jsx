@@ -58,7 +58,7 @@ class ModalComments extends Component {
               <div className="col-md-12">
                 <h4 className="details-block-name">Comments:</h4>
                 {
-                  this.props.comments ?
+                  Object.keys(this.props.comments).length > 0 ?
                   Object.keys(this.props.comments).map(id =>
                     <CommentItem
                       {...this.props.comments[id]}

@@ -1,11 +1,18 @@
 import React from 'react';
+import DialogModal from './DialogModal';
 
 const CommentItem = props => (
   <div className="row vertical-align coment-bottom-border">
     <div className="col-md-1 text-right">
-      <a onClick={props.remove} className="remove-comment">
+      <DialogModal
+        className="remove-comment"
+        modalTitle="Delete comment"
+        modalText="Are you sure you want to delete the comment?"
+        modalConfirmButtonText="Yes, delete comment"
+        modalSuccessAction={props.remove}
+      >
         <i className="glyphicon glyphicon-remove text-danger" />
-      </a>
+      </DialogModal>
     </div>
     <div className="col-md-8 comment-text">
       {props.comment_text}

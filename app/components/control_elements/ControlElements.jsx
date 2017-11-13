@@ -1,5 +1,6 @@
 import React from 'react';
 import ModalCommnets from '../ModalComments';
+import DialogModal from '../DialogModal';
 
 const ControlElements = ({
   mainData,
@@ -32,9 +33,12 @@ const ControlElements = ({
             </li>
           }
           <li>
-            <a
-              onClick={remove}
+            <DialogModal
               className="delete"
+              modalTitle={'Delete ' + elementType}
+              modalText={'Are you sure you want to delete the ' + elementType + '?'}
+              modalConfirmButtonText={'Yes, delete ' + elementType}
+              modalSuccessAction={remove}
             />
           </li>
         </ul>

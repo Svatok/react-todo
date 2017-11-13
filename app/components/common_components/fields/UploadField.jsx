@@ -45,7 +45,7 @@ class UploadField extends Component {
             <i className="glyphicon glyphicon-floppy-disk" />
           </label>
         }
-        { submitFailed && error && this.props.fileName &&
+        { submitFailed && error &&
           <div>
             <span className="help-block">{error}</span>
           </div>
