@@ -2,10 +2,12 @@ import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
-import user from '../reducers/user';
-import dashboard from '../reducers/dashboard';
-import alert from '../reducers/alert';
-import request from '../reducers/request';
+import user from './user';
+import dashboard from './dashboard';
+import comments from './comments';
+import alert from './alert';
+import request from './request';
+import file from './file';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -13,7 +15,9 @@ const rootReducer = combineReducers({
   alert,
   routing,
   dashboard,
-  request
+  comments,
+  request,
+  file
 });
 
 export default rootReducer;

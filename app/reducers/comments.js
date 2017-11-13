@@ -1,33 +1,33 @@
 import * as types from '../types';
 
 const initialState = {
-  comments: {}
+  list: {}
 };
 
-export default function dashboard(state = initialState, {type, payload}) {
+export default function comments(state = initialState, {type, payload}) {
   switch (type) {
     case types.FETCH_COMMENTS_SUCCESS:
       return {
         ...state,
-        comments: payload
+        list: payload
       };
     case types.ADD_COMMENT_SUCCESS:
       return {
         ...state,
-        comments: {
-          ...state.comments,
+        list: {
+          ...state.list,
           [payload.id]: payload
         }
       };
     case types.REMOVE_COMMENT_SUCCESS: {
       const removeComment = () => {
-        const newComments = Object.assign({}, state.comments);
+        const newComments = Object.assign({}, state.list);
         delete newComments[payload];
         return newComments;
       };
       return {
         ...state,
-        comments: removeComment()
+        list: removeComment()
       };
     }
     default:

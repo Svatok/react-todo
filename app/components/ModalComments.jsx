@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Modal,
-} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { fetchComments, removeComment } from '../actions/comments';
 import CommentItem from './CommentItem';
+import NewCommentForm from './forms/comment/NewCommentForm';
 
 class ModalComments extends Component {
   constructor() {
@@ -21,6 +21,7 @@ class ModalComments extends Component {
   }
 
   open() {
+    this.props.fetchComments(this.props.projectId, this.props.taskId);
     this.setState({ showModal: true });
   }
 
@@ -37,7 +38,7 @@ class ModalComments extends Component {
           onHide={this.close}
         >
           <Modal.Header className="details-header" closeButton>
-            Task comments:
+            Task details:
           </Modal.Header>
           <Modal.Body>
             <div className="row">
@@ -46,7 +47,7 @@ class ModalComments extends Component {
                 <p className="input-group">
                   <input className="form-control" type="text" />
                   <span className="input-group-btn">
-                    <button className="btn btn-default" ng-click="im.open($event)" type="button">
+                    <button className="btn btn-default" type="button">
                       <i className="glyphicon glyphicon-calendar"></i>
                     </button>
                   </span>
@@ -59,7 +60,11 @@ class ModalComments extends Component {
                 {
                   this.props.comments ?
                   Object.keys(this.props.comments).map(id =>
-                    <CommentItem {...this.props.comments[id]} key={id} />
+                    <CommentItem
+                      {...this.props.comments[id]}
+                      key={id}
+                      remove={() => this.props.removeComment(this.props.projectId, this.props.taskId, id)}
+                    />
                   )
                   :
                   <div className="row vertical-align no-comments">
@@ -68,7 +73,7 @@ class ModalComments extends Component {
                 }
               </div>
             </div>
-
+            <NewCommentForm taskId={this.props.taskId} projectId={this.props.projectId} />
           </Modal.Body>
         </Modal>
       </div>
@@ -90,4 +95,13 @@ ModalComments.defaultProps = {
   // modalSuccessAction: () => null
 };
 
-export default ModalComments;
+const mapDispatchToProps = {
+  fetchComments,
+  removeComment
+};
+
+const mapStateToProps = state => ({
+  comments: state.comments.list
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalComments);

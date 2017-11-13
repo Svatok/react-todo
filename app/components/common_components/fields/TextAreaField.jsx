@@ -2,7 +2,6 @@ import React from 'react';
 import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 
 const TextAreaField = ({
-  className,
   input,
   label,
   name,
@@ -11,7 +10,7 @@ const TextAreaField = ({
   children,
   rows
 }) => (
-  <FormGroup className={className}>
+  <FormGroup className={touched && error && 'has-error'}>
     { label && <ControlLabel>{label}</ControlLabel>}
     <FormControl
       type="text"

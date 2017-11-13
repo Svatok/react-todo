@@ -11,3 +11,7 @@ const minLength = min => (value) => {
 };
 
 export const minLength6 = minLength(6);
+
+export const isFile = (value) => {
+  return value && (new RegExp('(' + ['.pdf', '.doc', 'docx'].join('|').replace(/\./g, '\\.') + ')$')).test(value.name) ? undefined : 'Wrong file format';
+};

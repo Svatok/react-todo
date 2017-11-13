@@ -1,3 +1,5 @@
+import { reset } from 'redux-form';
+import { removeFile } from './file';
 import * as types from '../types';
 import api from '../services/api';
 
@@ -22,15 +24,17 @@ export const fetchComments = (projectId, taskId) => (dispatch) => {
     });
 };
 
-export const addComment = ({projectId, taskId, commentText, attachment}) => (dispatch) => {
+export const addComment = ({projectId, taskId, commentText, attachment}, dispatch) => {
   dispatch({ type: types.REQUEST_START });
   return api()
-    .post(`/todos/${projectId}/items/${taskId}/comments`, { comment_text: commentText, attachment })
+    .post(`/todos/${projectId}/items/${taskId}/comments`, { comment_text: commentText, attachment }, { multipart: true })
     .then((response) => {
       dispatch({
         type: types.ADD_COMMENT_SUCCESS,
         payload: response.data
       });
+      dispatch(reset('newCommentForm'));
+      dispatch(removeFile());
       dispatch({ type: types.REQUEST_SUCCESS });
     })
     .catch((error) => {
