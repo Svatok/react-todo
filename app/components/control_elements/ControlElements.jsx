@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import ModalCommnets from '../ModalComments';
 import DialogModal from '../DialogModal';
 
@@ -14,34 +15,41 @@ const ControlElements = ({
 }) => (
   <div>
     { (editingId !== elementId) &&
-      <div className="control">
-        <ul>
-          { (elementType === 'task') &&
+      <div>
+        { (elementType === 'task') && mainData.deadline &&
+          <div className="deadline">
+            {moment(mainData.deadline).format('MM/DD/YYYY h:mm')}
+          </div>
+        }
+        <div className="control">
+          <ul>
+            { (elementType === 'task') &&
+              <li>
+                <a className="sort" />
+              </li>
+            }
             <li>
-              <a className="sort" />
+              <a
+                onClick={startEditing}
+                className="edit"
+              />
             </li>
-          }
-          <li>
-            <a
-              onClick={startEditing}
-              className="edit"
-            />
-          </li>
-          { (elementType === 'task') &&
+            { (elementType === 'task') &&
+              <li>
+                <ModalCommnets mainData={mainData} />
+              </li>
+            }
             <li>
-              <ModalCommnets taskId={mainData.id} projectId={mainData.projectId} />
+              <DialogModal
+                className="delete"
+                modalTitle={'Delete ' + elementType}
+                modalText={'Are you sure you want to delete the ' + elementType + '?'}
+                modalConfirmButtonText={'Yes, delete ' + elementType}
+                modalSuccessAction={remove}
+              />
             </li>
-          }
-          <li>
-            <DialogModal
-              className="delete"
-              modalTitle={'Delete ' + elementType}
-              modalText={'Are you sure you want to delete the ' + elementType + '?'}
-              modalConfirmButtonText={'Yes, delete ' + elementType}
-              modalSuccessAction={remove}
-            />
-          </li>
-        </ul>
+          </ul>
+        </div>
       </div>
     }
     { (editingId === elementId) &&

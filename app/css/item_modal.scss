@@ -1,3 +1,6 @@
+// @import "~react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css";
+@import "~react-datetime/css/react-datetime.css";
+
 .modal-dialog {
   margin: 30px auto;
 }
@@ -83,4 +86,8 @@
   .fa-times {
     color: red;
   }
+}
+
+.rdtPicker {
+  top: 40px;
 }

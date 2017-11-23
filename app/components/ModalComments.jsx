@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import DateTime from 'react-datetime';
 import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
 import { fetchComments, removeComment } from '../actions/comments';
+import { editTask } from '../actions/tasks';
 import CommentItem from './CommentItem';
 import NewCommentForm from './forms/comment/NewCommentForm';
 
@@ -14,6 +17,7 @@ class ModalComments extends Component {
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+    this.changeDeadline = this.changeDeadline.bind(this);
   }
 
   close() {
@@ -21,8 +25,15 @@ class ModalComments extends Component {
   }
 
   open() {
-    this.props.fetchComments(this.props.projectId, this.props.taskId);
+    this.props.fetchComments(this.props.mainData.projectId, this.props.mainData.id);
     this.setState({ showModal: true });
+  }
+
+  changeDeadline(deadline) {
+    this.props.editTask({
+      ...this.props.mainData,
+      deadline
+    });
   }
 
   render() {
@@ -45,10 +56,14 @@ class ModalComments extends Component {
               <div className="col-md-7">
                 <h4 className="details-block-name">Deadline:</h4>
                 <p className="input-group">
-                  <input className="form-control" type="text" />
+                  <DateTime
+                    defaultValue={this.props.mainData.deadline ? moment(this.props.mainData.deadline).format('MM/DD/YYYY h:mm') : ''}
+                    inputProps={{name: 'deadline', ref: (input) => { this.deadline = input; }}}
+                    onBlur={deadline => this.changeDeadline(deadline)}
+                  />
                   <span className="input-group-btn">
-                    <button className="btn btn-default" type="button">
-                      <i className="glyphicon glyphicon-calendar"></i>
+                    <button className="btn btn-default" type="button" onClick={() => this.deadline.focus()}>
+                      <i className="glyphicon glyphicon-calendar" />
                     </button>
                   </span>
                 </p>
@@ -97,7 +112,8 @@ ModalComments.defaultProps = {
 
 const mapDispatchToProps = {
   fetchComments,
-  removeComment
+  removeComment,
+  editTask
 };
 
 const mapStateToProps = state => ({

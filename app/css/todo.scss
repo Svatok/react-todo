@@ -376,6 +376,11 @@
     .task-control .control {
       display: inline-block;
     }
+
+    .task-control .deadline {
+      overflow: hidden;
+      display: none;
+    }
   }
 
   &.active {

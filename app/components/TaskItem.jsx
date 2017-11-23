@@ -9,7 +9,8 @@ const TaskItem = (props) => {
   const mainData = {
     id: props.id,
     projectId: props.todo_id,
-    index: props.index
+    index: props.index,
+    deadline: props.deadline
   };
 
   return (

@@ -28,7 +28,7 @@ export const cancelTaskEditing = () => (dispatch) => {
   return dispatch({ type: types.UNSET_EDITING_STATUS_TO_TASK});
 };
 
-export const editTask = ({id, name = null, done = null, projectId, index}) => (dispatch) => {
+export const editTask = ({id, name = null, done = null, deadline = null, projectId, index}) => (dispatch) => {
   dispatch({ type: types.REQUEST_START });
   const params = {};
   if (name) {
@@ -36,6 +36,9 @@ export const editTask = ({id, name = null, done = null, projectId, index}) => (d
   }
   if (done !== null) {
     params.done = done;
+  }
+  if (deadline !== null) {
+    params.deadline = deadline;
   }
   return api()
     .put(`/todos/${projectId}/items/${id}`, { ...params })
