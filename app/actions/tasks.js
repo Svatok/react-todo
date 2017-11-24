@@ -1,4 +1,5 @@
 import {reset} from 'redux-form';
+import {arrayMove} from 'react-sortable-hoc';
 import * as types from '../types';
 import api from '../services/api';
 
@@ -30,6 +31,7 @@ export const cancelTaskEditing = () => (dispatch) => {
 
 export const editTask = ({id, name = null, done = null, deadline = null, projectId, index}) => (dispatch) => {
   dispatch({ type: types.REQUEST_START });
+  debugger;
   const params = {};
   if (name) {
     params.name = name;
@@ -68,4 +70,23 @@ export const removeTask = ({id, projectId, index}) => (dispatch) => {
       dispatch({ type: types.REQUEST_ERROR });
       dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
     });
+};
+
+export const sortTask = ({oldIndex, newIndex}, items) => (dispatch) => {
+  dispatch({ type: types.REQUEST_START });
+  const newItems = arrayMove(items, oldIndex, newIndex);
+  return Promise.all(
+    newItems.map((item, index) => {
+      if (item.position !== index) {
+        return api().put(`/todos/${item.todo_id}/items/${item.id}`, { position: index });
+      }
+      return null;
+    })
+  ).then(() => {
+    dispatch({ type: types.REQUEST_SUCCESS });
+    dispatch({ type: types.SORT_TASKS_SUCCESS, payload: {projectId: newItems[0].todo_id, newItems} });
+  }).catch((error) => {
+    dispatch({ type: types.REQUEST_ERROR });
+    dispatch({ type: types.ADD_ERROR, payload: error.data.errors[0] });
+  });
 };

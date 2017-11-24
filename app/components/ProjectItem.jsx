@@ -1,10 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form';
+import {SortableContainer} from 'react-sortable-hoc';
 import NewTaskForm from './forms/task/NewTaskForm';
 import EditProjectForm from './forms/project/EditProjectForm';
 import TaskItem from './TaskItem';
 import ControlElements from './control_elements/ControlElements';
+
+const SortableTasks = SortableContainer(({tasks, other}) => {
+  return (
+    <div className="task-list">
+      <table className="tasks">
+        <tbody>
+          {tasks.map((item, taskIndex) => (
+            <TaskItem {...other} {...item} key={`item-${item.position}`} index={taskIndex} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+});
 
 const ProjectItem = (props) => {
   const { projectActions, id, editingProject, index, items, ...other } = props;
@@ -44,15 +59,12 @@ const ProjectItem = (props) => {
             form={`AddTaskForm_${props.index}`}
             submitFailed={false}
           />
-          <div className="task-list">
-            <table className="tasks">
-              <tbody>
-                {props.items.map((item, taskIndex) => (
-                  <TaskItem {...other} {...item} key={item.id} index={taskIndex} />
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <SortableTasks
+            tasks={props.items}
+            other={other}
+            onSortEnd={data => props.taskActions.sortTask(data, props.items)}
+            useDragHandle
+          />
         </div>
       }
     </div>

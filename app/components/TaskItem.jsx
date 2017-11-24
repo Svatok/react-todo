@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form';
+import {SortableElement} from 'react-sortable-hoc';
 import classNames from 'classnames';
 import EditTaskForm from './forms/task/EditTaskForm';
 import ControlElements from './control_elements/ControlElements';
 
-const TaskItem = (props) => {
+const TaskItem = SortableElement((props) => {
   const mainData = {
     id: props.id,
     projectId: props.todo_id,
-    index: props.index,
+    index: props.position,
     deadline: props.deadline
   };
 
@@ -59,6 +60,6 @@ const TaskItem = (props) => {
       </td>
     </tr>
   );
-};
+});
 
 export default connect()(TaskItem);

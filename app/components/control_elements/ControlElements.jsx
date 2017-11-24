@@ -1,7 +1,10 @@
 import React from 'react';
 import moment from 'moment';
+import { SortableHandle } from 'react-sortable-hoc';
 import ModalCommnets from '../ModalComments';
 import DialogModal from '../DialogModal';
+
+const DragHandle = SortableHandle(() => <a className="sort" />);
 
 const ControlElements = ({
   mainData,
@@ -25,7 +28,7 @@ const ControlElements = ({
           <ul>
             { (elementType === 'task') &&
               <li>
-                <a className="sort" />
+                <DragHandle />
               </li>
             }
             <li>

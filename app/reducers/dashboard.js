@@ -122,6 +122,18 @@ export default function dashboard(state = initialState, {type, payload}) {
         }
       };
     }
+    case types.SORT_TASKS_SUCCESS: {
+      return {
+        ...state,
+        projects: {
+          ...state.projects,
+          [payload.projectId]: {
+            ...state.projects[payload.projectId],
+            items: payload.newItems
+          }
+        }
+      };
+    }
     default:
       return state;
   }
