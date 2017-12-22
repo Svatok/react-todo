@@ -10,7 +10,7 @@ const minLength = min => (value) => {
   return value && value.length < min ? `Must be ${min} characters or more` : undefined;
 };
 
-export const minLength6 = minLength(6);
+export const minLength8 = minLength(8);
 
 export const isFile = (value) => {
   if (!value) {

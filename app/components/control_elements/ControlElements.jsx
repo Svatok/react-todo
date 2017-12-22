@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import classNames from 'classnames';
 import { SortableHandle } from 'react-sortable-hoc';
 import ModalCommnets from '../ModalComments';
 import DialogModal from '../DialogModal';
@@ -20,7 +21,13 @@ const ControlElements = ({
     { (editingId !== elementId) &&
       <div>
         { (elementType === 'task') && mainData.deadline &&
-          <div className="deadline">
+          <div
+            className={classNames(
+              'deadline',
+              (mainData.done && 'complete-deadline'),
+              (!mainData.done && (moment().diff(mainData.deadline, 'days') >= 0 ? 'text-danger' : 'text-success'))
+            )}
+          >
             {moment(mainData.deadline).format('MM/DD/YYYY h:mm')}
           </div>
         }

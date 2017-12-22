@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Form, Button } from 'react-bootstrap';
 import { TextField, PasswordField } from '../components/common_components/fields';
 import { submitLogIn } from '../actions/users';
-import { required, email } from '../utils/validation';
+import { required, email, minLength8 } from '../utils/validation';
 
 const LogIn = props => (
   <div className="authform">
@@ -15,7 +15,6 @@ const LogIn = props => (
     >
       <h3>Log in</h3>
       <div className="form-group">
-        <Link className="right" to="/signup">Sign up</Link>
         <Field
           label="Email address"
           name="email"
@@ -25,19 +24,19 @@ const LogIn = props => (
         />
       </div>
       <div className="form-group">
-        <Link className="right" to="/">Forgot password?</Link>
         <Field
           label="Password"
           name="password"
           component={PasswordField}
-          validate={[required]}
+          validate={[required, minLength8]}
         />
       </div>
       <Button className="btn btn-primary right" type="submit">Log in</Button>
-      <Link className="btn" to="/">
-        <i className="fa fa-facebook view" />
-        <span>Facebook in!</span>
-      </Link>
+      <span>
+        Don’t have an account?
+        <br />
+        <Link to="/signup">Sign up</Link>
+      </span>
     </Form>
   </div>
 );

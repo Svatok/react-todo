@@ -380,10 +380,6 @@
     .task-control .deadline {
       overflow: hidden;
       display: none;
-      font-size: 13px;
-      line-height: 120%;
-      font-weight: 700;
-      color: #999;
     }
   }
 
@@ -452,5 +448,8 @@
   font-size: 13px;
   line-height: 120%;
   font-weight: 700;
+}
+
+.complete-deadline {
   color: #999;
 }

@@ -10,8 +10,7 @@ const TaskItem = SortableElement((props) => {
   const mainData = {
     id: props.id,
     projectId: props.todo_id,
-    index: props.position,
-    deadline: props.deadline
+    index: props.position
   };
 
   return (
@@ -55,7 +54,7 @@ const TaskItem = SortableElement((props) => {
           remove={() => props.taskActions.removeTask({...mainData})}
           save={() => props.dispatch(submit(`EditTaskForm_${props.index}`))}
           cancelEditing={() => props.taskActions.cancelTaskEditing()}
-          mainData={mainData}
+          mainData={{ deadline: props.deadline, done: props.done, ...mainData}}
         />
       </td>
     </tr>

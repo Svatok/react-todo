@@ -31,7 +31,6 @@ export const cancelTaskEditing = () => (dispatch) => {
 
 export const editTask = ({id, name = null, done = null, deadline = null, projectId, index}) => (dispatch) => {
   dispatch({ type: types.REQUEST_START });
-  debugger;
   const params = {};
   if (name) {
     params.name = name;

@@ -13,7 +13,7 @@ const SortableTasks = SortableContainer(({tasks, other}) => {
       <table className="tasks">
         <tbody>
           {tasks.map((item, taskIndex) => (
-            <TaskItem {...other} {...item} key={`item-${item.position}`} index={taskIndex} />
+            <TaskItem {...other} {...item} key={`item-${item.id}`} index={taskIndex} />
           ))}
         </tbody>
       </table>
